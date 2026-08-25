@@ -4,139 +4,39 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Revisão Inteligente</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#687386;--line:#e4e8ef;--accent:#4f46e5;--danger:#dc2626;--warn:#d97706;--ok:#15803d}
+:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#687386;--line:#e4e8ef;--accent:#4f46e5;--danger:#dc2626}
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
-header{background:#111827;color:white;padding:22px 18px}header h1{margin:0 0 6px;font-size:24px}header p{margin:0;color:#cbd5e1}
-main{max-width:1050px;margin:auto;padding:18px}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
-.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 2px 8px #00000008}
-.metric{font-size:28px;font-weight:700}.label{color:var(--muted);font-size:13px;margin-top:4px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-h2{font-size:18px;margin:0 0 14px}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-label{font-size:13px;color:var(--muted);display:block;margin-bottom:5px}
-input,select,button{width:100%;padding:11px;border:1px solid #d6dbe5;border-radius:9px;font-size:14px;background:white}
-button{background:var(--accent);color:white;border:0;font-weight:700;cursor:pointer;margin-top:12px}
-button.secondary{background:#eef0ff;color:#3730a3}.danger{background:#fee2e2;color:#991b1b}
-.tablewrap{overflow:auto}.item{padding:12px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center}
-.item:last-child{border-bottom:0}.subject{font-weight:700}.meta{font-size:12px;color:var(--muted);margin-top:4px}
-.badge{padding:5px 8px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap}.red{background:#fee2e2;color:#991b1b}.orange{background:#ffedd5;color:#9a3412}.yellow{background:#fef3c7;color:#92400e}.green{background:#dcfce7;color:#166534}
-.empty{color:var(--muted);font-size:14px;padding:8px 0}
-.small{font-size:12px;color:var(--muted);line-height:1.5}
+header{background:#111827;color:white;padding:22px 18px}header h1{margin:0 0 6px;font-size:24px}header p{margin:0;color:#cbd5e1}main{max-width:1050px;margin:auto;padding:18px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 2px 8px #00000008}.metric{font-size:28px;font-weight:700}.label{color:var(--muted);font-size:13px;margin-top:4px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}h2{font-size:18px;margin:0 0 14px}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}label{font-size:13px;color:var(--muted);display:block;margin-bottom:5px}input,select,button{width:100%;padding:11px;border:1px solid #d6dbe5;border-radius:9px;font-size:14px;background:white}button{background:var(--accent);color:white;border:0;font-weight:700;cursor:pointer;margin-top:12px}button.secondary{background:#eef0ff;color:#3730a3}.danger{background:#fee2e2;color:#991b1b}.item{padding:12px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center}.item:last-child{border-bottom:0}.subject{font-weight:700}.meta{font-size:12px;color:var(--muted);margin-top:4px}.badge{padding:5px 8px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap}.red{background:#fee2e2;color:#991b1b}.orange{background:#ffedd5;color:#9a3412}.yellow{background:#fef3c7;color:#92400e}.green{background:#dcfce7;color:#166534}.empty{color:var(--muted);font-size:14px;padding:8px 0}.small{font-size:12px;color:var(--muted);line-height:1.5}#message{margin:12px 0;padding:10px;border-radius:9px;display:none;font-size:13px}#message.ok{display:block;background:#dcfce7;color:#166534}#message.error{display:block;background:#fee2e2;color:#991b1b}
 @media(max-width:760px){.cards{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.row{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 <header><h1>🧠 Revisão Inteligente</h1><p>Seu calendário de revisão adaptativa para concursos</p></header>
-<main>
-<section class="cards">
-<div class="card"><div class="metric" id="overdue">0</div><div class="label">🔴 Atrasadas</div></div>
-<div class="card"><div class="metric" id="today">0</div><div class="label">🟠 Hoje</div></div>
-<div class="card"><div class="metric" id="week">0</div><div class="label">🟡 Próximos 7 dias</div></div>
-<div class="card"><div class="metric" id="avg">—</div><div class="label">📊 Domínio médio</div></div>
-</section>
-
-<div class="grid">
-<section class="panel">
-<h2>➕ Cadastrar assunto</h2>
-<div class="row">
-<div><label>Matéria</label><input id="matter" placeholder="Ex.: Direito Previdenciário"></div>
-<div><label>Assunto</label><input id="subject" placeholder="Ex.: Segurados"></div>
-<div><label>Data de conclusão</label><input id="date" type="date"></div>
-<div><label>Questões disponíveis</label><input id="available" type="number" min="0" value="0"></div>
-<div><label>Questões feitas</label><input id="done" type="number" min="0" value="10"></div>
-<div><label>Acertos</label><input id="correct" type="number" min="0" value="0"></div>
-<div><label>Dificuldade</label><select id="difficulty"><option value="1">Fácil</option><option value="2" selected>Média</option><option value="3">Difícil</option></select></div>
-<div><label>Prioridade</label><select id="priority"><option value="1">Normal</option><option value="2">Alta</option><option value="3">🔥 Muito alta</option></select></div>
-</div>
-<button onclick="addSubject()">Salvar assunto</button>
-<p class="small">O primeiro intervalo é calculado pelo percentual de acertos, quantidade de questões e dificuldade. Depois, cada revisão recalcula o próximo intervalo.</p>
-</section>
-
-<section class="panel">
-<h2>📅 Revisões</h2>
-<div id="list"></div>
-</section>
-</div>
-
-<section class="panel" style="margin-top:18px">
-<h2>📚 Todos os assuntos</h2>
-<div id="all"></div>
-<button class="danger" onclick="clearAll()">Apagar todos os dados</button>
-</section>
+<main><div id="message"></div>
+<section class="cards"><div class="card"><div class="metric" id="overdue">0</div><div class="label">🔴 Atrasadas</div></div><div class="card"><div class="metric" id="today">0</div><div class="label">🟠 Hoje</div></div><div class="card"><div class="metric" id="week">0</div><div class="label">🟡 Próximos 7 dias</div></div><div class="card"><div class="metric" id="avg">—</div><div class="label">📊 Domínio médio</div></div></section>
+<div class="grid"><section class="panel"><h2>➕ Cadastrar assunto</h2><div class="row"><div><label>Matéria</label><input id="matter" placeholder="Ex.: Direito Previdenciário"></div><div><label>Assunto</label><input id="subject" placeholder="Ex.: Segurados"></div><div><label>Data de conclusão</label><input id="date" type="date"></div><div><label>Questões disponíveis</label><input id="available" type="number" min="0" value="0"></div><div><label>Questões feitas</label><input id="done" type="number" min="0" value="10"></div><div><label>Acertos</label><input id="correct" type="number" min="0" value="0"></div><div><label>Dificuldade</label><select id="difficulty"><option value="1">Fácil</option><option value="2" selected>Média</option><option value="3">Difícil</option></select></div><div><label>Prioridade</label><select id="priority"><option value="1">Normal</option><option value="2">Alta</option><option value="3">🔥 Muito alta</option></select></div></div><button onclick="addSubject()">Salvar assunto</button><p class="small">O primeiro intervalo é calculado pelo percentual de acertos, quantidade de questões e dificuldade. Depois, cada revisão recalcula o próximo intervalo.</p></section>
+<section class="panel"><h2>📅 Revisões</h2><div id="list"><div class="empty">Carregando...</div></div></section></div>
+<section class="panel" style="margin-top:18px"><h2>📚 Todos os assuntos</h2><div id="all"><div class="empty">Carregando...</div></div><button class="danger" onclick="clearAll()">Apagar todos os dados</button></section>
 </main>
-
 <script>
-const KEY="revisao_inteligente_v1";
-let data=JSON.parse(localStorage.getItem(KEY)||"[]");
-const todayISO=()=>new Date().toISOString().slice(0,10);
-document.getElementById("date").value=todayISO();
-
-function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
-function calcScore(done,correct){return done>0?Math.round((correct/done)*100):0}
-
-function interval(score,done,difficulty,priority){
-  let days=score<60?1:score<70?3:score<80?5:score<85?7:score<90?14:score<95?21:30;
-  if(done<10) days=Math.min(days,7);
-  else if(done<20) days=Math.min(days,14);
-  if(difficulty==3) days=Math.max(1,Math.round(days*.75));
-  if(priority==3) days=Math.max(1,Math.round(days*.85));
-  return days;
-}
-function addDays(date,days){
-  const d=new Date(date+"T12:00:00"); d.setDate(d.getDate()+days);
-  return d.toISOString().slice(0,10);
-}
-function addSubject(){
-  const matter=document.getElementById("matter").value.trim(), subject=document.getElementById("subject").value.trim();
-  const date=document.getElementById("date").value;
-  const available=+document.getElementById("available").value, done=+document.getElementById("done").value, correct=+document.getElementById("correct").value;
-  const difficulty=+document.getElementById("difficulty").value, priority=+document.getElementById("priority").value;
-  if(!matter||!subject||!date){alert("Preencha matéria, assunto e data.");return}
-  if(correct>done){alert("Os acertos não podem ser maiores que as questões feitas.");return}
-  const score=calcScore(done,correct), days=interval(score,done,difficulty,priority);
-  data.push({id:Date.now(),matter,subject,date,available,done,correct,score,difficulty,priority,next:addDays(date,days),history:[{date,done,correct,score}]});
-  document.getElementById("matter").value="";document.getElementById("subject").value="";
-  save();
-}
-function status(next){
-  const t=todayISO();
-  if(next<t)return ["red","ATRASADA"];
-  if(next===t)return ["orange","HOJE"];
-  const d=Math.round((new Date(next)-new Date(t))/86400000);
-  if(d<=7)return ["yellow","EM BREVE"];
-  return ["green","FUTURA"];
-}
-function review(id){
-  const x=data.find(a=>a.id===id); if(!x)return;
-  const done=prompt("Quantas questões você fez nesta revisão?",String(x.done));
-  if(done===null)return;
-  const correct=prompt("Quantas acertou?",String(x.correct));
-  if(correct===null)return;
-  const d=+done,c=+correct;
-  if(!Number.isFinite(d)||!Number.isFinite(c)||d<0||c<0||c>d){alert("Valores inválidos.");return}
-  x.done=d;x.correct=c;x.score=calcScore(d,c);
-  x.history.push({date:todayISO(),done:d,correct:c,score:x.score});
-  const days=interval(x.score,d,x.difficulty,x.priority);
-  x.next=addDays(todayISO(),days); save();
-}
-function removeItem(id){data=data.filter(x=>x.id!==id);save()}
-function render(){
-  const t=todayISO(), now=new Date(t+"T12:00:00"), week=new Date(now); week.setDate(week.getDate()+7);
-  let overdue=0,today=0,w=0,sum=0;
-  data.forEach(x=>{if(x.next<t)overdue++;else if(x.next===t)today++;else if(new Date(x.next+"T12:00:00")<=week)w++;sum+=x.score});
-  document.getElementById("overdue").textContent=overdue;document.getElementById("today").textContent=today;document.getElementById("week").textContent=w;
-  document.getElementById("avg").textContent=data.length?Math.round(sum/data.length)+"%":"—";
-  const sorted=[...data].sort((a,b)=>a.next.localeCompare(b.next));
-  const due=sorted.filter(x=>x.next<=addDays(t,7));
-  document.getElementById("list").innerHTML=due.length?due.map(x=>{
-    const [cl,txt]=status(x.next);
-    return `<div class="item"><div><div class="subject">${x.matter} — ${x.subject}</div><div class="meta">${x.next===t?"Revisar hoje":x.next<t?"Atrasada":"Revisão: "+x.next} · ${x.score}% · ${x.done} questões</div></div><div><span class="badge ${cl}">${txt}</span><button class="secondary" onclick="review(${x.id})">Registrar revisão</button></div></div>`
-  }).join(""):'<div class="empty">Nenhuma revisão nos próximos 7 dias. 🎉</div>';
-  document.getElementById("all").innerHTML=sorted.length?sorted.map(x=>`<div class="item"><div><div class="subject">${x.matter} — ${x.subject}</div><div class="meta">${x.score}% · ${x.done} questões · próxima: ${x.next}</div></div><button class="danger" style="width:auto" onclick="removeItem(${x.id})">Excluir</button></div>`).join(""):'<div class="empty">Cadastre seu primeiro assunto acima.</div>';
-}
-function clearAll(){if(confirm("Apagar todos os assuntos?")){data=[];save()}}
-render();
-</script>
-</body>
-</html>
+const SUPABASE_URL="https://xtpaojnigdofhlscymff.supabase.co";
+const SUPABASE_KEY="sb_publishable_RVb1L7ZybSDaVpZNGWUEcg_PVubg7sV";
+const {createClient}=supabase; const db=createClient(SUPABASE_URL,SUPABASE_KEY);
+const todayISO=()=>new Intl.DateTimeFormat("en-CA",{timeZone:"America/Sao_Paulo"}).format(new Date());
+function showMessage(text,type="ok"){const e=document.getElementById("message");e.textContent=text;e.className=type;setTimeout(()=>{e.className="";e.textContent=""},5000)}
+function calcScore(done,correct){return done>0?Math.round(correct/done*100):0}
+function interval(score,done,difficulty,priority){let days=score<60?1:score<70?3:score<80?5:score<85?7:score<90?14:score<95?21:30;if(done<10)days=Math.min(days,7);else if(done<20)days=Math.min(days,14);if(difficulty==3)days=Math.max(1,Math.round(days*.75));if(priority==3)days=Math.max(1,Math.round(days*.85));return days}
+function addDays(date,days){const d=new Date(date+"T12:00:00");d.setDate(d.getDate()+days);return d.toISOString().slice(0,10)}
+async function loadData(){const {data,error}=await db.from("assuntos").select("*").eq("ativo",true).order("proxima_revisao",{ascending:true,nullsFirst:false});if(error){showMessage("Erro ao carregar: "+error.message,"error");return []}return data||[]}
+async function addSubject(){const matter=document.getElementById("matter").value.trim(),subject=document.getElementById("subject").value.trim(),date=document.getElementById("date").value,available=+document.getElementById("available").value,done=+document.getElementById("done").value,correct=+document.getElementById("correct").value,difficulty=+document.getElementById("difficulty").value,priority=+document.getElementById("priority").value;if(!matter||!subject||!date){alert("Preencha matéria, assunto e data.");return}if(done<0||correct<0||available<0||correct>done){alert("Confira as quantidades de questões e acertos.");return}const score=calcScore(done,correct),days=interval(score,done,difficulty,priority),next=addDays(date,days);const payload={materia:matter,assunto:subject,data_conclusao:date,questoes_disponiveis:available,questoes_feitas:done,acertos:correct,percentual:score,dificuldade:difficulty,prioridade:priority,proxima_revisao:next,indice_dominio:score,ativo:true,questoes_necessarias:Math.max(0,10-done),nivel_confianca:score>=85?"alta":score>=70?"media":"baixa"};const {error}=await db.from("assuntos").insert(payload);if(error){showMessage("Não foi possível salvar: "+error.message,"error");return}document.getElementById("matter").value="";document.getElementById("subject").value="";document.getElementById("available").value="0";document.getElementById("done").value="10";document.getElementById("correct").value="0";showMessage("Assunto salvo no Supabase. Próxima revisão: "+next);render()}
+function status(next){const t=todayISO();if(!next)return["green","SEM DATA"];if(next<t)return["red","ATRASADA"];if(next===t)return["orange","HOJE"];const d=Math.round((new Date(next+"T12:00:00")-new Date(t+"T12:00:00"))/86400000);if(d<=7)return["yellow","EM BREVE"];return["green","FUTURA"]}
+async function review(id){const current=(await loadData()).find(a=>a.id===id);if(!current)return;const done=prompt("Quantas questões você fez nesta revisão?",String(current.questoes_feitas??0));if(done===null)return;const correct=prompt("Quantas acertou?",String(current.acertos??0));if(correct===null)return;const d=+done,c=+correct;if(!Number.isFinite(d)||!Number.isFinite(c)||d<0||c<0||c>d){alert("Valores inválidos.");return}const score=calcScore(d,c);const {error}=await db.from("assuntos").update({questoes_feitas:d,acertos:c,percentual:score,indice_dominio:score,questoes_necessarias:Math.max(0,10-d),nivel_confianca:score>=85?"alta":score>=70?"media":"baixa"}).eq("id",id);if(error){showMessage("Erro ao registrar revisão: "+error.message,"error");return}showMessage("Revisão registrada. O Supabase calculou a próxima revisão.");render()}
+async function removeItem(id){if(!confirm("Excluir este assunto?"))return;const {error}=await db.from("assuntos").update({ativo:false}).eq("id",id);if(error){showMessage("Erro ao excluir: "+error.message,"error");return}showMessage("Assunto excluído.");render()}
+async function clearAll(){if(!confirm("Apagar todos os assuntos?"))return;const {error}=await db.from("assuntos").update({ativo:false}).eq("ativo",true);if(error){showMessage("Erro ao apagar: "+error.message,"error");return}showMessage("Todos os assuntos foram desativados.");render()}
+function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+async function render(){const data=await loadData(),t=todayISO(),now=new Date(t+"T12:00:00"),week=new Date(now);week.setDate(week.getDate()+7);let overdue=0,today=0,w=0,sum=0;data.forEach(x=>{if(!x.proxima_revisao)return;if(x.proxima_revisao<t)overdue++;else if(x.proxima_revisao===t)today++;else if(new Date(x.proxima_revisao+"T12:00:00")<=week)w++;sum+=Number(x.percentual||0)});document.getElementById("overdue").textContent=overdue;document.getElementById("today").textContent=today;document.getElementById("week").textContent=w;document.getElementById("avg").textContent=data.length?Math.round(sum/data.length)+"%":"—";const sorted=[...data].sort((a,b)=>(a.proxima_revisao||"9999-12-31").localeCompare(b.proxima_revisao||"9999-12-31")),due=sorted.filter(x=>x.proxima_revisao&&x.proxima_revisao<=addDays(t,7));document.getElementById("list").innerHTML=due.length?due.map(x=>{const[cl,txt]=status(x.proxima_revisao);return `<div class="item"><div><div class="subject">${escapeHtml(x.materia)} — ${escapeHtml(x.assunto)}</div><div class="meta">${x.proxima_revisao===t?"Revisar hoje":x.proxima_revisao<t?"Atrasada":"Revisão: "+x.proxima_revisao} · ${x.percentual??0}% · ${x.questoes_feitas??0} questões</div></div><div><span class="badge ${cl}">${txt}</span><button class="secondary" onclick="review(${x.id})">Registrar revisão</button></div></div>`}).join(""):'<div class="empty">Nenhuma revisão nos próximos 7 dias. 🎉</div>';document.getElementById("all").innerHTML=sorted.length?sorted.map(x=>`<div class="item"><div><div class="subject">${escapeHtml(x.materia)} — ${escapeHtml(x.assunto)}</div><div class="meta">${x.percentual??0}% · ${x.questoes_feitas??0} questões · próxima: ${x.proxima_revisao||"—"}</div></div><button class="danger" style="width:auto" onclick="removeItem(${x.id})">Excluir</button></div>`).join(""):'<div class="empty">Cadastre seu primeiro assunto acima.</div>'}
+document.getElementById("date").value=todayISO();render();
+</script></body></html>
