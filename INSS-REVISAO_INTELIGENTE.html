@@ -16,8 +16,6 @@
   --line:#e4e8ef;
   --accent:#4f46e5;
   --danger:#dc2626;
-  --warn:#d97706;
-  --ok:#15803d;
 }
 
 *{box-sizing:border-box}
@@ -26,36 +24,54 @@ body{
   margin:0;
   font-family:Arial,sans-serif;
   background:var(--bg);
-  color:var(--text);
+  color:var(--text)
 }
 
 header{
   background:#111827;
   color:white;
-  padding:22px 18px;
+  padding:22px 18px
 }
 
 header h1{
   margin:0 0 6px;
-  font-size:24px;
+  font-size:24px
 }
 
 header p{
   margin:0;
-  color:#cbd5e1;
+  color:#cbd5e1
 }
 
 main{
   max-width:1050px;
   margin:auto;
-  padding:18px;
+  padding:18px
+}
+
+#message{
+  display:none;
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:14px;
+  font-size:14px
+}
+
+.message-ok{
+  background:#dcfce7;
+  color:#166534
+}
+
+.message-error{
+  background:#fee2e2;
+  color:#991b1b
 }
 
 .cards{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:12px;
-  margin-bottom:18px;
+  margin-bottom:18px
 }
 
 .card,.panel{
@@ -63,42 +79,42 @@ main{
   border:1px solid var(--line);
   border-radius:14px;
   padding:16px;
-  box-shadow:0 2px 8px #00000008;
+  box-shadow:0 2px 8px #00000008
 }
 
 .metric{
   font-size:28px;
-  font-weight:700;
+  font-weight:700
 }
 
 .label{
   color:var(--muted);
   font-size:13px;
-  margin-top:4px;
+  margin-top:4px
 }
 
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:18px;
+  gap:18px
 }
 
 h2{
   font-size:18px;
-  margin:0 0 14px;
+  margin:0 0 14px
 }
 
 .row{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:10px;
+  gap:10px
 }
 
 label{
   font-size:13px;
   color:var(--muted);
   display:block;
-  margin-bottom:5px;
+  margin-bottom:5px
 }
 
 input,select,button{
@@ -107,7 +123,7 @@ input,select,button{
   border:1px solid #d6dbe5;
   border-radius:9px;
   font-size:14px;
-  background:white;
+  background:white
 }
 
 button{
@@ -116,21 +132,17 @@ button{
   border:0;
   font-weight:700;
   cursor:pointer;
-  margin-top:12px;
+  margin-top:12px
 }
 
 button.secondary{
   background:#eef0ff;
-  color:#3730a3;
+  color:#3730a3
 }
 
-button.danger{
+.danger{
   background:#fee2e2;
-  color:#991b1b;
-}
-
-.tablewrap{
-  overflow:auto;
+  color:#991b1b
 }
 
 .item{
@@ -139,21 +151,21 @@ button.danger{
   display:flex;
   justify-content:space-between;
   gap:12px;
-  align-items:center;
+  align-items:center
 }
 
 .item:last-child{
-  border-bottom:0;
+  border-bottom:0
 }
 
 .subject{
-  font-weight:700;
+  font-weight:700
 }
 
 .meta{
   font-size:12px;
   color:var(--muted);
-  margin-top:4px;
+  margin-top:4px
 }
 
 .badge{
@@ -161,72 +173,52 @@ button.danger{
   border-radius:999px;
   font-size:11px;
   font-weight:700;
-  white-space:nowrap;
+  white-space:nowrap
 }
 
 .red{
   background:#fee2e2;
-  color:#991b1b;
+  color:#991b1b
 }
 
 .orange{
   background:#ffedd5;
-  color:#9a3412;
+  color:#9a3412
 }
 
 .yellow{
   background:#fef3c7;
-  color:#92400e;
+  color:#92400e
 }
 
 .green{
   background:#dcfce7;
-  color:#166534;
+  color:#166534
 }
 
 .empty{
   color:var(--muted);
   font-size:14px;
-  padding:8px 0;
+  padding:8px 0
 }
 
 .small{
   font-size:12px;
   color:var(--muted);
-  line-height:1.5;
-}
-
-.message{
-  display:none;
-  margin-bottom:18px;
-  padding:11px 14px;
-  border-radius:10px;
-  font-size:14px;
-}
-
-.message.error{
-  display:block;
-  background:#fee2e2;
-  color:#991b1b;
-}
-
-.message.success{
-  display:block;
-  background:#dcfce7;
-  color:#166534;
+  line-height:1.5
 }
 
 @media(max-width:760px){
   .cards{
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:1fr 1fr
   }
 
   .grid{
-    grid-template-columns:1fr;
+    grid-template-columns:1fr
   }
 
   .row{
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:1fr 1fr
   }
 }
 </style>
@@ -241,7 +233,7 @@ button.danger{
 
 <main>
 
-<div id="message" class="message"></div>
+<div id="message"></div>
 
 <section class="cards">
 
@@ -308,20 +300,24 @@ button.danger{
 
 <div>
 <label>Dificuldade</label>
+
 <select id="difficulty">
 <option value="1">Fácil</option>
 <option value="2" selected>Média</option>
 <option value="3">Difícil</option>
 </select>
+
 </div>
 
 <div>
 <label>Prioridade</label>
+
 <select id="priority">
 <option value="1">Normal</option>
 <option value="2">Alta</option>
 <option value="3">🔥 Muito alta</option>
 </select>
+
 </div>
 
 </div>
@@ -330,8 +326,8 @@ button.danger{
 
 <p class="small">
 O primeiro intervalo é calculado pelo percentual de acertos,
-quantidade de questões e dificuldade. Depois, cada revisão recalcula
-o próximo intervalo.
+quantidade de questões e dificuldade. Depois, cada revisão
+recalcula o próximo intervalo.
 </p>
 
 </section>
@@ -342,7 +338,7 @@ o próximo intervalo.
 <h2>📅 Revisões</h2>
 
 <div id="list">
-<div class="empty">Carregando...</div>
+Carregando...
 </div>
 
 </section>
@@ -355,7 +351,7 @@ o próximo intervalo.
 <h2>📚 Todos os assuntos</h2>
 
 <div id="all">
-<div class="empty">Carregando...</div>
+Carregando...
 </div>
 
 <button class="danger" onclick="clearAll()">
@@ -370,7 +366,7 @@ Apagar todos os dados
 <script>
 
 /* =========================================================
-   SUPABASE
+   CONFIGURAÇÃO SUPABASE
    ========================================================= */
 
 const SUPABASE_URL =
@@ -388,141 +384,110 @@ const db = createClient(
 
 
 /* =========================================================
-   DATAS
+   FUNÇÕES BÁSICAS
    ========================================================= */
 
 function todayISO(){
 
-  const formatter = new Intl.DateTimeFormat(
-    "en-CA",
-    {
-      timeZone:"America/Sao_Paulo",
-      year:"numeric",
-      month:"2-digit",
-      day:"2-digit"
-    }
-  );
+  const d = new Date();
 
-  return formatter.format(new Date());
+  const year = d.getFullYear();
+  const month = String(d.getMonth()+1).padStart(2,"0");
+  const day = String(d.getDate()).padStart(2,"0");
+
+  return `${year}-${month}-${day}`;
 }
 
 
-function addDays(date,days){
+function showMessage(text,type="ok"){
 
-  const d = new Date(date+"T12:00:00");
+  const box = document.getElementById("message");
 
-  d.setDate(d.getDate()+days);
+  box.textContent = text;
 
-  return d.toISOString().slice(0,10);
+  box.className =
+    type === "error"
+    ? "message-error"
+    : "message-ok";
+
+  box.style.display = "block";
+
+  setTimeout(()=>{
+    box.style.display="none";
+  },5000);
 }
 
-
-/* =========================================================
-   MENSAGENS
-   ========================================================= */
-
-function showMessage(text,type="success"){
-
-  const el = document.getElementById("message");
-
-  el.textContent = text;
-
-  el.className = "message "+type;
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-  if(type==="success"){
-
-    setTimeout(()=>{
-      el.className="message";
-    },5000);
-
-  }
-}
-
-
-/* =========================================================
-   CÁLCULOS
-   ========================================================= */
 
 function calcScore(done,correct){
 
-  return done>0
+  return done > 0
     ? Math.round((correct/done)*100)
     : 0;
+
 }
 
+
+/* =========================================================
+   CÁLCULO DO INTERVALO
+   ========================================================= */
 
 function interval(score,done,difficulty,priority){
 
   let days =
-    score<60 ? 1 :
-    score<70 ? 3 :
-    score<80 ? 5 :
-    score<85 ? 7 :
-    score<90 ? 14 :
-    score<95 ? 21 :
+    score < 60 ? 1 :
+    score < 70 ? 3 :
+    score < 80 ? 5 :
+    score < 85 ? 7 :
+    score < 90 ? 14 :
+    score < 95 ? 21 :
     30;
 
-  if(done<10){
+  if(done < 10){
 
-    days=Math.min(days,7);
+    days = Math.min(days,7);
 
-  }else if(done<20){
+  }else if(done < 20){
 
-    days=Math.min(days,14);
+    days = Math.min(days,14);
 
   }
 
-  if(difficulty==3){
+  if(difficulty === 3){
 
-    days=Math.max(
+    days = Math.max(
       1,
-      Math.round(days*.75)
+      Math.round(days * 0.75)
     );
 
   }
 
-  if(priority==3){
+  if(priority === 3){
 
-    days=Math.max(
+    days = Math.max(
       1,
-      Math.round(days*.85)
+      Math.round(days * 0.85)
     );
 
   }
 
   return days;
+
 }
 
 
-/* =========================================================
-   CARREGAR DADOS
-   ========================================================= */
+function addDays(date,days){
 
-async function loadData(){
+  const d =
+    new Date(date + "T12:00:00");
 
-  const {data,error} = await db
-    .from("assuntos")
-    .select("*")
-    .eq("ativo",true)
-    .order("proxima_revisao",{ascending:true});
+  d.setDate(
+    d.getDate() + days
+  );
 
-  if(error){
+  return d
+    .toISOString()
+    .slice(0,10);
 
-    showMessage(
-      "Erro ao carregar dados: "+error.message,
-      "error"
-    );
-
-    return [];
-
-  }
-
-  return data || [];
 }
 
 
@@ -533,52 +498,59 @@ async function loadData(){
 async function addSubject(){
 
   const matter =
-    document.getElementById("matter").value.trim();
+    document.getElementById("matter")
+    .value.trim();
 
   const subject =
-    document.getElementById("subject").value.trim();
+    document.getElementById("subject")
+    .value.trim();
 
   const date =
-    document.getElementById("date").value;
+    document.getElementById("date")
+    .value;
 
   const available =
-    +document.getElementById("available").value;
+    Number(document.getElementById("available").value);
 
   const done =
-    +document.getElementById("done").value;
+    Number(document.getElementById("done").value);
 
   const correct =
-    +document.getElementById("correct").value;
+    Number(document.getElementById("correct").value);
 
   const difficulty =
-    +document.getElementById("difficulty").value;
+    Number(document.getElementById("difficulty").value);
 
   const priority =
-    +document.getElementById("priority").value;
+    Number(document.getElementById("priority").value);
 
 
   if(!matter || !subject || !date){
 
-    alert(
-      "Preencha matéria, assunto e data."
+    showMessage(
+      "Preencha matéria, assunto e data.",
+      "error"
     );
 
     return;
+
   }
 
 
   if(
-    done<0 ||
-    correct<0 ||
-    available<0 ||
-    correct>done
+    done < 0 ||
+    correct < 0 ||
+    available < 0 ||
+    correct > done
   ){
 
-    alert(
-      "Confira as quantidades de questões e acertos."
+    showMessage(
+      "Confira as quantidades de questões e acertos.",
+      "error"
     );
 
     return;
+
   }
 
 
@@ -599,47 +571,51 @@ async function addSubject(){
 
   /*
      IMPORTANTE:
+
      NÃO enviamos "percentual".
-     Essa coluna é GENERATED ALWAYS no Supabase.
+
+     Essa coluna é GENERATED ALWAYS
+     no Supabase e o próprio banco calcula.
   */
 
   const payload = {
 
-    materia:matter,
+    materia: matter,
 
-    assunto:subject,
+    assunto: subject,
 
-    data_conclusao:date,
+    data_conclusao: date,
 
-    questoes_disponiveis:available,
+    questoes_disponiveis: available,
 
-    questoes_feitas:done,
+    questoes_feitas: done,
 
-    acertos:correct,
+    acertos: correct,
 
-    dificuldade:difficulty,
+    dificuldade: difficulty,
 
-    prioridade:priority,
+    prioridade: priority,
 
-    proxima_revisao:next,
+    proxima_revisao: next,
 
-    indice_dominio:score,
+    indice_dominio: score,
 
-    ativo:true,
+    ativo: true,
 
     questoes_necessarias:
       Math.max(0,10-done),
 
     nivel_confianca:
-      score>=85
-        ? "alta"
-        : score>=70
-          ? "media"
-          : "baixa"
+      score >= 85
+      ? "alta"
+      : score >= 70
+      ? "media"
+      : "baixa"
+
   };
 
 
-  const {error} =
+  const { error } =
     await db
       .from("assuntos")
       .insert(payload);
@@ -647,31 +623,28 @@ async function addSubject(){
 
   if(error){
 
+    console.error(error);
+
     showMessage(
-      "Não foi possível salvar: "+
+      "Não foi possível salvar: " +
       error.message,
       "error"
     );
 
-    console.error(error);
-
     return;
+
   }
 
 
   document.getElementById("matter").value="";
-
   document.getElementById("subject").value="";
-
   document.getElementById("available").value="0";
-
   document.getElementById("done").value="10";
-
   document.getElementById("correct").value="0";
 
 
   showMessage(
-    "Assunto salvo no Supabase. Próxima revisão: "+
+    "✅ Assunto salvo! Próxima revisão: " +
     next
   );
 
@@ -682,37 +655,62 @@ async function addSubject(){
 
 
 /* =========================================================
-   STATUS DA REVISÃO
+   CARREGAR DADOS
+   ========================================================= */
+
+async function loadData(){
+
+  const { data,error } =
+    await db
+      .from("assuntos")
+      .select("*")
+      .eq("ativo",true)
+      .order("proxima_revisao",{ascending:true});
+
+
+  if(error){
+
+    console.error(error);
+
+    showMessage(
+      "Erro ao carregar dados: " +
+      error.message,
+      "error"
+    );
+
+    return [];
+
+  }
+
+
+  return data || [];
+
+}
+
+
+/* =========================================================
+   STATUS
    ========================================================= */
 
 function status(next){
 
-  const t=todayISO();
+  const t = todayISO();
 
   if(!next){
 
-    return [
-      "green",
-      "SEM DATA"
-    ];
+    return ["green","SEM DATA"];
 
   }
 
-  if(next<t){
+  if(next < t){
 
-    return [
-      "red",
-      "ATRASADA"
-    ];
+    return ["red","ATRASADA"];
 
   }
 
-  if(next===t){
+  if(next === t){
 
-    return [
-      "orange",
-      "HOJE"
-    ];
+    return ["orange","HOJE"];
 
   }
 
@@ -721,23 +719,18 @@ function status(next){
       (
         new Date(next+"T12:00:00") -
         new Date(t+"T12:00:00")
-      ) /
-      86400000
+      ) / 86400000
     );
 
-  if(d<=7){
 
-    return [
-      "yellow",
-      "EM BREVE"
-    ];
+  if(d <= 7){
+
+    return ["yellow","EM BREVE"];
 
   }
 
-  return [
-    "green",
-    "FUTURA"
-  ];
+  return ["green","FUTURA"];
+
 }
 
 
@@ -751,197 +744,128 @@ async function review(id){
     await loadData();
 
   const current =
-    data.find(a=>a.id===id);
+    data.find(a => a.id === id);
 
   if(!current){
 
-    showMessage(
-      "Assunto não encontrado.",
-      "error"
-    );
-
     return;
+
   }
 
 
-  const doneInput =
+  const done =
     prompt(
       "Quantas questões você fez nesta revisão?",
-      String(current.questoes_feitas || 10)
+      String(current.questoes_feitas || 0)
     );
 
-  if(doneInput===null){
+
+  if(done === null){
 
     return;
+
   }
 
 
-  const correctInput =
+  const correct =
     prompt(
       "Quantas acertou?",
       String(current.acertos || 0)
     );
 
-  if(correctInput===null){
+
+  if(correct === null){
 
     return;
+
   }
 
 
-  const done=+doneInput;
-
-  const correct=+correctInput;
+  const d = Number(done);
+  const c = Number(correct);
 
 
   if(
-    !Number.isFinite(done) ||
-    !Number.isFinite(correct) ||
-    done<0 ||
-    correct<0 ||
-    correct>done
+    !Number.isFinite(d) ||
+    !Number.isFinite(c) ||
+    d < 0 ||
+    c < 0 ||
+    c > d
   ){
 
-    alert(
-      "Valores inválidos."
+    showMessage(
+      "Valores inválidos.",
+      "error"
     );
 
     return;
+
   }
 
 
   const score =
-    calcScore(done,correct);
+    calcScore(d,c);
 
 
   const days =
     interval(
       score,
-      done,
+      d,
       current.dificuldade,
       current.prioridade
     );
 
 
-  const today =
-    todayISO();
-
-
   const next =
-    addDays(today,days);
+    addDays(todayISO(),days);
 
 
-  const previousNext =
-    current.proxima_revisao;
-
-
-  /*
-     Atualiza o assunto.
-     NÃO enviamos percentual,
-     pois ele é GENERATED ALWAYS.
-  */
-
-  const {error:updateError} =
+  const { error } =
     await db
       .from("assuntos")
       .update({
 
-        questoes_feitas:done,
+        questoes_feitas:d,
 
-        acertos:correct,
-
-        indice_dominio:score,
+        acertos:c,
 
         proxima_revisao:next,
 
+        indice_dominio:score,
+
         questoes_necessarias:
-          Math.max(0,10-done),
+          Math.max(0,10-d),
 
         nivel_confianca:
-          score>=85
-            ? "alta"
-            : score>=70
-              ? "media"
-              : "baixa"
+          score >= 85
+          ? "alta"
+          : score >= 70
+          ? "media"
+          : "baixa"
 
       })
       .eq("id",id);
 
 
-  if(updateError){
+  if(error){
+
+    console.error(error);
 
     showMessage(
-      "Não foi possível atualizar: "+
-      updateError.message,
+      "Não foi possível registrar revisão: " +
+      error.message,
       "error"
     );
 
     return;
-  }
-
-
-  /*
-     Guarda o histórico da revisão.
-  */
-
-  const {error:historyError} =
-    await db
-      .from("historico_revisoes")
-      .insert({
-
-        assunto_id:id,
-
-        data_revisao:today,
-
-        questoes_feitas:done,
-
-        acertos:correct,
-
-        percentual:score,
-
-        dificuldade:current.dificuldade,
-
-        observacoes:null,
-
-        intervalo_anterior:
-          previousNext
-            ? Math.max(
-                0,
-                Math.round(
-                  (
-                    new Date(previousNext+"T12:00:00") -
-                    new Date(today+"T12:00:00")
-                  ) /
-                  86400000
-                )
-              )
-            : null,
-
-        proximo_intervalo:days
-
-      });
-
-
-  if(historyError){
-
-    console.error(
-      "Erro ao salvar histórico:",
-      historyError
-    );
-
-    showMessage(
-      "Revisão atualizada, mas houve erro ao salvar o histórico: "+
-      historyError.message,
-      "error"
-    );
-
-  }else{
-
-    showMessage(
-      "Revisão registrada! Próxima revisão: "+
-      next
-    );
 
   }
+
+
+  showMessage(
+    "✅ Revisão registrada! Próxima revisão: " +
+    next
+  );
 
 
   await render();
@@ -950,7 +874,7 @@ async function review(id){
 
 
 /* =========================================================
-   EXCLUIR UM ASSUNTO
+   EXCLUIR
    ========================================================= */
 
 async function removeItem(id){
@@ -962,54 +886,30 @@ async function removeItem(id){
   ){
 
     return;
+
   }
 
 
-  /*
-     Primeiro excluímos o histórico relacionado.
-  */
-
-  const {error:historyError} =
-    await db
-      .from("historico_revisoes")
-      .delete()
-      .eq("assunto_id",id);
-
-
-  if(historyError){
-
-    showMessage(
-      "Não foi possível excluir o histórico: "+
-      historyError.message,
-      "error"
-    );
-
-    return;
-  }
-
-
-  const {error} =
+  const { error } =
     await db
       .from("assuntos")
-      .delete()
+      .update({
+        ativo:false
+      })
       .eq("id",id);
 
 
   if(error){
 
     showMessage(
-      "Não foi possível excluir: "+
+      "Não foi possível excluir: " +
       error.message,
       "error"
     );
 
     return;
+
   }
-
-
-  showMessage(
-    "Assunto excluído."
-  );
 
 
   await render();
@@ -1025,74 +925,38 @@ async function clearAll(){
 
   if(
     !confirm(
-      "Apagar TODOS os assuntos e históricos?"
+      "Apagar todos os assuntos?"
     )
   ){
 
     return;
+
   }
 
 
-  const {error:historyError} =
-    await db
-      .from("historico_revisoes")
-      .delete()
-      .gte("id",0);
-
-
-  if(historyError){
-
-    showMessage(
-      "Erro ao apagar histórico: "+
-      historyError.message,
-      "error"
-    );
-
-    return;
-  }
-
-
-  const {error} =
+  const { error } =
     await db
       .from("assuntos")
-      .delete()
-      .gte("id",0);
+      .update({
+        ativo:false
+      })
+      .eq("ativo",true);
 
 
   if(error){
 
     showMessage(
-      "Erro ao apagar assuntos: "+
+      "Não foi possível apagar: " +
       error.message,
       "error"
     );
 
     return;
+
   }
 
 
-  showMessage(
-    "Todos os dados foram apagados."
-  );
-
-
   await render();
-
-}
-
-
-/* =========================================================
-   ESCAPAR HTML
-   ========================================================= */
-
-function escapeHtml(value){
-
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
 
 }
 
@@ -1125,22 +989,19 @@ async function render(){
 
 
   let overdue=0;
-
   let today=0;
-
   let w=0;
-
   let sum=0;
 
 
   data.forEach(x=>{
 
-    if(x.proxima_revisao<t){
+    if(x.proxima_revisao < t){
 
       overdue++;
 
     }else if(
-      x.proxima_revisao===t
+      x.proxima_revisao === t
     ){
 
       today++;
@@ -1148,7 +1009,7 @@ async function render(){
     }else if(
       new Date(
         x.proxima_revisao+"T12:00:00"
-      )<=week
+      ) <= week
     ){
 
       w++;
@@ -1156,37 +1017,29 @@ async function render(){
     }
 
 
-    const score =
+    sum +=
       Number(
-        x.percentual ??
-        x.indice_dominio ??
-        0
+        x.percentual ?? x.indice_dominio ?? 0
       );
-
-    sum+=score;
 
   });
 
 
-  document.getElementById(
-    "overdue"
-  ).textContent=overdue;
+  document.getElementById("overdue")
+    .textContent=overdue;
 
 
-  document.getElementById(
-    "today"
-  ).textContent=today;
+  document.getElementById("today")
+    .textContent=today;
 
 
-  document.getElementById(
-    "week"
-  ).textContent=w;
+  document.getElementById("week")
+    .textContent=w;
 
 
-  document.getElementById(
-    "avg"
-  ).textContent=
-    data.length
+  document.getElementById("avg")
+    .textContent=
+      data.length
       ? Math.round(sum/data.length)+"%"
       : "—";
 
@@ -1194,9 +1047,9 @@ async function render(){
   const sorted =
     [...data].sort(
       (a,b)=>
-        String(a.proxima_revisao||"")
+        (a.proxima_revisao||"")
         .localeCompare(
-          String(b.proxima_revisao||"")
+          b.proxima_revisao||""
         )
     );
 
@@ -1207,132 +1060,147 @@ async function render(){
 
   const due =
     sorted.filter(
-      x=>
+      x =>
         x.proxima_revisao &&
-        x.proxima_revisao<=limit
+        x.proxima_revisao <= limit
     );
 
 
-  document.getElementById(
-    "list"
-  ).innerHTML =
-    due.length
+  document.getElementById("list")
+    .innerHTML =
+      due.length
+      ? due.map(x=>{
 
-    ? due.map(x=>{
+          const [cl,txt] =
+            status(x.proxima_revisao);
 
-        const [cl,txt] =
-          status(x.proxima_revisao);
-
-        const score =
-          Number(
+          const percentual =
             x.percentual ??
             x.indice_dominio ??
-            0
-          );
+            0;
 
-        return `
-        <div class="item">
+          return `
 
-          <div>
+          <div class="item">
 
-            <div class="subject">
-              ${escapeHtml(x.materia)}
-              —
-              ${escapeHtml(x.assunto)}
-            </div>
+            <div>
 
-            <div class="meta">
-              ${
-                x.proxima_revisao===t
-                ? "Revisar hoje"
-                : x.proxima_revisao<t
+              <div class="subject">
+                ${escapeHtml(x.materia)}
+                —
+                ${escapeHtml(x.assunto)}
+              </div>
+
+              <div class="meta">
+
+                ${
+                  x.proxima_revisao===t
+                  ? "Revisar hoje"
+                  : x.proxima_revisao<t
                   ? "Atrasada"
                   : "Revisão: "+x.proxima_revisao
-              }
+                }
 
-              · ${score}%
-              · ${x.questoes_feitas||0} questões
+                · ${percentual}%
+                · ${x.questoes_feitas || 0} questões
+
+              </div>
+
+            </div>
+
+            <div>
+
+              <span class="badge ${cl}">
+                ${txt}
+              </span>
+
+              <button
+                class="secondary"
+                onclick="review(${x.id})">
+
+                Registrar revisão
+
+              </button>
+
             </div>
 
           </div>
 
-          <div>
+          `;
 
-            <span class="badge ${cl}">
-              ${txt}
-            </span>
+        }).join("")
+
+      : '<div class="empty">Nenhuma revisão nos próximos 7 dias. 🎉</div>';
+
+
+  document.getElementById("all")
+    .innerHTML =
+      sorted.length
+      ? sorted.map(x=>{
+
+          const percentual =
+            x.percentual ??
+            x.indice_dominio ??
+            0;
+
+          return `
+
+          <div class="item">
+
+            <div>
+
+              <div class="subject">
+
+                ${escapeHtml(x.materia)}
+                —
+                ${escapeHtml(x.assunto)}
+
+              </div>
+
+              <div class="meta">
+
+                ${percentual}%
+                · ${x.questoes_feitas || 0} questões
+                · próxima:
+                ${x.proxima_revisao || "—"}
+
+              </div>
+
+            </div>
 
             <button
-              class="secondary"
-              onclick="review(${x.id})">
-              Registrar revisão
+              class="danger"
+              style="width:auto"
+              onclick="removeItem(${x.id})">
+
+              Excluir
+
             </button>
 
           </div>
 
-        </div>
-        `;
+          `;
 
-      }).join("")
+        }).join("")
 
-    : `
-      <div class="empty">
-        Nenhuma revisão nos próximos 7 dias. 🎉
-      </div>
-      `;
+      : '<div class="empty">Cadastre seu primeiro assunto acima.</div>';
+
+}
 
 
-  document.getElementById(
-    "all"
-  ).innerHTML =
-    sorted.length
+/* =========================================================
+   SEGURANÇA PARA EXIBIÇÃO DE TEXTO
+   ========================================================= */
 
-    ? sorted.map(x=>{
+function escapeHtml(value){
 
-        const score =
-          Number(
-            x.percentual ??
-            x.indice_dominio ??
-            0
-          );
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
-        return `
-        <div class="item">
-
-          <div>
-
-            <div class="subject">
-              ${escapeHtml(x.materia)}
-              —
-              ${escapeHtml(x.assunto)}
-            </div>
-
-            <div class="meta">
-              ${score}%
-              · ${x.questoes_feitas||0} questões
-              · próxima:
-              ${x.proxima_revisao||"—"}
-            </div>
-
-          </div>
-
-          <button
-            class="danger"
-            style="width:auto"
-            onclick="removeItem(${x.id})">
-            Excluir
-          </button>
-
-        </div>
-        `;
-
-      }).join("")
-
-    : `
-      <div class="empty">
-        Cadastre seu primeiro assunto acima.
-      </div>
-      `;
 }
 
 
@@ -1340,10 +1208,8 @@ async function render(){
    INICIALIZAÇÃO
    ========================================================= */
 
-document.getElementById(
-  "date"
-).value=todayISO();
-
+document.getElementById("date")
+  .value = todayISO();
 
 render();
 
