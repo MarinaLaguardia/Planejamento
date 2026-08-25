@@ -11,14 +11,14 @@
 <style>
 :root{
   --bg:#f5f7fb;
-  --card:#fff;
+  --card:#ffffff;
   --text:#172033;
   --muted:#687386;
   --line:#e4e8ef;
   --accent:#4f46e5;
   --danger:#dc2626;
-  --warning:#f59e0b;
   --success:#16a34a;
+  --warning:#f59e0b;
 }
 
 *{
@@ -35,7 +35,7 @@ body{
 header{
   background:#111827;
   color:white;
-  padding:18px 22px;
+  padding:18px;
 }
 
 header h1{
@@ -50,27 +50,27 @@ header p{
 
 main{
   max-width:1100px;
-  margin:18px auto;
-  padding:0 14px;
+  margin:0 auto;
+  padding:18px;
 }
 
 .message{
-  padding:12px 16px;
+  padding:12px 14px;
   border-radius:10px;
   margin-bottom:14px;
   display:none;
-}
-
-.message.success{
-  display:block;
-  background:#dcfce7;
-  color:#166534;
 }
 
 .message.error{
   display:block;
   background:#fee2e2;
   color:#b91c1c;
+}
+
+.message.success{
+  display:block;
+  background:#dcfce7;
+  color:#166534;
 }
 
 .cards{
@@ -84,63 +84,37 @@ main{
   background:var(--card);
   border:1px solid var(--line);
   border-radius:14px;
-  padding:18px;
+  padding:16px;
   box-shadow:0 2px 8px rgba(0,0,0,.04);
 }
 
 .metric{
   font-size:28px;
-  font-weight:700;
-  margin-bottom:8px;
+  font-weight:bold;
 }
 
 .label{
   color:var(--muted);
-  font-size:14px;
+  margin-top:6px;
 }
 
-.dot{
-  display:inline-block;
-  width:12px;
-  height:12px;
-  border-radius:50%;
-  margin-right:6px;
-}
-
-.red{
-  background:#dc3555;
-}
-
-.orange{
-  background:#ff7043;
-}
-
-.yellow{
-  background:#f2c94c;
-}
-
-.green{
-  background:#22c55e;
-}
-
-.layout{
+.grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:16px;
+  gap:18px;
 }
 
 .panel{
   background:var(--card);
   border:1px solid var(--line);
   border-radius:14px;
-  padding:18px;
-  margin-bottom:18px;
+  padding:16px;
   box-shadow:0 2px 8px rgba(0,0,0,.04);
 }
 
 .panel h2{
-  margin:0 0 16px;
-  font-size:20px;
+  margin-top:0;
+  font-size:19px;
 }
 
 .row{
@@ -149,96 +123,109 @@ main{
   gap:10px;
 }
 
-.field{
-  margin-bottom:12px;
-}
-
-.field label{
+label{
   display:block;
-  color:#526174;
-  font-size:14px;
-  margin-bottom:6px;
+  color:#526176;
+  font-size:13px;
+  margin-bottom:5px;
 }
 
 input,
 select{
   width:100%;
-  padding:10px 11px;
-  border:1px solid #ccd5e2;
+  padding:11px;
+  border:1px solid #cfd7e5;
   border-radius:9px;
   font-size:14px;
   background:white;
 }
 
-input:focus,
-select:focus{
-  outline:none;
-  border-color:var(--accent);
+.field{
+  margin-bottom:10px;
 }
 
 button{
   border:0;
   border-radius:9px;
-  padding:11px 15px;
-  font-weight:700;
+  padding:12px 16px;
+  font-weight:bold;
   cursor:pointer;
-  font-size:14px;
 }
 
-.btn-primary{
+.primary{
   width:100%;
   background:var(--accent);
   color:white;
+  margin-top:4px;
 }
 
-.btn-primary:hover{
-  filter:brightness(.95);
+.primary:hover{
+  opacity:.9;
 }
 
-.btn-review{
-  background:#eef0ff;
-  color:#3730a3;
-}
-
-.btn-delete{
-  background:#fee2e2;
-  color:#b91c1c;
-}
-
-.btn-danger{
+.danger{
   width:100%;
   background:#fee2e2;
   color:#b91c1c;
+  margin-top:14px;
+}
+
+.review{
+  border-bottom:1px solid var(--line);
+  padding:12px 0;
+}
+
+.review:last-child{
+  border-bottom:0;
+}
+
+.review-title{
+  font-weight:bold;
+  font-size:16px;
+}
+
+.review-info{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:6px;
+}
+
+.review button{
+  background:#eef2ff;
+  color:#3730a3;
+  margin-top:8px;
+}
+
+.subject{
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.subject:last-child{
+  border-bottom:0;
+}
+
+.subject-title{
+  font-weight:bold;
+  font-size:16px;
+}
+
+.subject-info{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:5px;
 }
 
 .empty{
   color:var(--muted);
-  padding:8px 0;
+  padding:10px 0;
 }
 
-.review-item{
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:14px;
-  margin-bottom:12px;
-}
-
-.review-top{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  align-items:flex-start;
-}
-
-.review-title{
-  font-weight:700;
-  font-size:16px;
-}
-
-.review-date{
-  margin-top:7px;
+.small-note{
   color:var(--muted);
-  font-size:13px;
+  font-size:12px;
+  line-height:1.5;
+  margin-top:10px;
 }
 
 .badge{
@@ -246,18 +233,8 @@ button{
   padding:5px 9px;
   border-radius:999px;
   font-size:11px;
-  font-weight:700;
-  white-space:nowrap;
-}
-
-.badge.red{
-  background:#fee2e2;
-  color:#b91c1c;
-}
-
-.badge.yellow{
-  background:#fef3c7;
-  color:#92400e;
+  font-weight:bold;
+  margin-left:8px;
 }
 
 .badge.green{
@@ -265,75 +242,37 @@ button{
   color:#166534;
 }
 
-.subject-item{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  padding:14px 0;
-  border-bottom:1px solid var(--line);
+.badge.yellow{
+  background:#fef3c7;
+  color:#92400e;
 }
 
-.subject-item:last-child{
-  border-bottom:0;
-}
-
-.subject-name{
-  font-weight:700;
-}
-
-.subject-info{
-  color:var(--muted);
-  font-size:13px;
-  margin-top:6px;
-}
-
-.actions{
-  display:flex;
-  gap:8px;
-  flex-shrink:0;
-}
-
-.help{
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.5;
-  margin-top:12px;
+.badge.red{
+  background:#fee2e2;
+  color:#b91c1c;
 }
 
 @media(max-width:760px){
+  main{
+    padding:12px;
+  }
+
   .cards{
     grid-template-columns:repeat(2,1fr);
   }
 
-  .layout{
+  .grid{
     grid-template-columns:1fr;
-  }
-
-  .row{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .subject-item{
-    align-items:flex-start;
-  }
-
-  .review-top{
-    flex-direction:column;
   }
 }
 
 @media(max-width:480px){
+  .row{
+    grid-template-columns:1fr;
+  }
+
   .cards{
     grid-template-columns:1fr 1fr;
-  }
-
-  main{
-    padding:0 10px;
-  }
-
-  .panel{
-    padding:14px;
   }
 }
 </style>
@@ -348,167 +287,188 @@ button{
 
 <main>
 
-<div id="message" class="message"></div>
+  <div id="message" class="message"></div>
 
-<section class="cards">
+  <!-- INDICADORES -->
+  <section class="cards">
 
-  <div class="card">
-    <div class="metric" id="overdue">0</div>
-    <div class="label">
-      <span class="dot red"></span>Atrasadas
+    <div class="card">
+      <div id="overdue" class="metric">0</div>
+      <div class="label">🔴 Atrasadas</div>
     </div>
-  </div>
 
-  <div class="card">
-    <div class="metric" id="today">0</div>
-    <div class="label">
-      <span class="dot orange"></span>Hoje
+    <div class="card">
+      <div id="today" class="metric">0</div>
+      <div class="label">🟠 Hoje</div>
     </div>
-  </div>
 
-  <div class="card">
-    <div class="metric" id="next7">0</div>
-    <div class="label">
-      <span class="dot yellow"></span>Próximos 7 dias
+    <div class="card">
+      <div id="next7" class="metric">0</div>
+      <div class="label">🟡 Próximos 7 dias</div>
     </div>
-  </div>
 
-  <div class="card">
-    <div class="metric" id="average">—</div>
-    <div class="label">
-      📊 Domínio médio
+    <div class="card">
+      <div id="average" class="metric">—</div>
+      <div class="label">📊 Domínio médio</div>
     </div>
-  </div>
 
-</section>
+  </section>
 
-<div class="layout">
+  <section class="grid">
 
-<section class="panel">
+    <!-- CADASTRO -->
+    <section class="panel">
 
-<h2>➕ Cadastrar assunto</h2>
+      <h2>➕ Cadastrar assunto</h2>
 
-<div class="row">
+      <div class="row">
 
-  <div class="field">
-    <label for="matter">Matéria</label>
-    <input
-      id="matter"
-      type="text"
-      placeholder="Ex.: Direito Previdenciário"
+        <div class="field">
+          <label for="matter">Matéria</label>
+          <input
+            id="matter"
+            type="text"
+            placeholder="Ex.: Direito Previdenciário"
+          >
+        </div>
+
+        <div class="field">
+          <label for="subject">Assunto</label>
+          <input
+            id="subject"
+            type="text"
+            placeholder="Ex.: Segurados"
+          >
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="field">
+          <label for="date">Data de conclusão</label>
+          <input
+            id="date"
+            type="date"
+          >
+        </div>
+
+        <div class="field">
+          <label for="available">Questões disponíveis</label>
+          <input
+            id="available"
+            type="number"
+            min="0"
+            value="0"
+          >
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="field">
+          <label for="done">Questões feitas</label>
+          <input
+            id="done"
+            type="number"
+            min="0"
+            value="10"
+          >
+        </div>
+
+        <div class="field">
+          <label for="correct">Acertos</label>
+          <input
+            id="correct"
+            type="number"
+            min="0"
+            value="0"
+          >
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="field">
+          <label for="difficulty">Dificuldade</label>
+
+          <select id="difficulty">
+            <option value="1">Fácil</option>
+            <option value="2" selected>Média</option>
+            <option value="3">Difícil</option>
+          </select>
+
+        </div>
+
+        <div class="field">
+          <label for="priority">Prioridade</label>
+
+          <select id="priority">
+            <option value="1">Normal</option>
+            <option value="2" selected>Alta</option>
+            <option value="3">Muito alta</option>
+          </select>
+
+        </div>
+
+      </div>
+
+      <button
+        class="primary"
+        onclick="addSubject()"
+      >
+        Salvar assunto
+      </button>
+
+      <div class="small-note">
+        O primeiro intervalo é calculado pelo percentual de acertos,
+        quantidade de questões e dificuldade. Depois, cada revisão
+        recalcula o próximo intervalo.
+      </div>
+
+    </section>
+
+
+    <!-- REVISOES -->
+    <section class="panel">
+
+      <h2>🗓️ Revisões</h2>
+
+      <div id="reviews">
+        <div class="empty">
+          Carregando...
+        </div>
+      </div>
+
+    </section>
+
+  </section>
+
+
+  <!-- TODOS OS ASSUNTOS -->
+  <section
+    class="panel"
+    style="margin-top:18px"
+  >
+
+    <h2>📚 Todos os assuntos</h2>
+
+    <div id="all">
+      <div class="empty">
+        Carregando...
+      </div>
+    </div>
+
+    <button
+      class="danger"
+      onclick="clearAll()"
     >
-  </div>
+      Apagar todos os dados
+    </button>
 
-  <div class="field">
-    <label for="subject">Assunto</label>
-    <input
-      id="subject"
-      type="text"
-      placeholder="Ex.: Segurados"
-    >
-  </div>
-
-</div>
-
-<div class="row">
-
-  <div class="field">
-    <label for="date">Data de conclusão</label>
-    <input id="date" type="date">
-  </div>
-
-  <div class="field">
-    <label for="available">Questões disponíveis</label>
-    <input id="available" type="number" min="0" value="0">
-  </div>
-
-</div>
-
-<div class="row">
-
-  <div class="field">
-    <label for="done">Questões feitas</label>
-    <input id="done" type="number" min="0" value="10">
-  </div>
-
-  <div class="field">
-    <label for="correct">Acertos</label>
-    <input id="correct" type="number" min="0" value="0">
-  </div>
-
-</div>
-
-<div class="row">
-
-  <div class="field">
-    <label for="difficulty">Dificuldade</label>
-
-    <select id="difficulty">
-      <option value="1">Fácil</option>
-      <option value="2" selected>Média</option>
-      <option value="3">Difícil</option>
-    </select>
-
-  </div>
-
-  <div class="field">
-    <label for="priority">Prioridade</label>
-
-    <select id="priority">
-      <option value="1" selected>Normal</option>
-      <option value="2">Alta</option>
-      <option value="3">Muito alta</option>
-    </select>
-
-  </div>
-
-</div>
-
-<button class="btn-primary" onclick="addSubject()">
-  Salvar assunto
-</button>
-
-<div class="help">
-  O primeiro intervalo é calculado pelo percentual de acertos,
-  quantidade de questões e dificuldade. Depois, cada revisão
-  recalcula o próximo intervalo.
-</div>
-
-</section>
-
-
-<section class="panel">
-
-<h2>🗓️ Revisões</h2>
-
-<div id="reviews">
-  <div class="empty">
-    Carregando...
-  </div>
-</div>
-
-</section>
-
-</div>
-
-
-<section class="panel">
-
-<h2>📚 Todos os assuntos</h2>
-
-<div id="all">
-  <div class="empty">
-    Carregando...
-  </div>
-</div>
-
-<br>
-
-<button class="btn-danger" onclick="clearAll()">
-  Apagar todos os dados
-</button>
-
-</section>
+  </section>
 
 </main>
 
@@ -516,7 +476,7 @@ button{
 <script>
 
 /* =========================================================
-   CONFIGURAÇÃO SUPABASE
+   SUPABASE
    ========================================================= */
 
 const SUPABASE_URL =
@@ -534,81 +494,50 @@ const db = createClient(
 
 
 /* =========================================================
-   UTILITÁRIOS DE DATA
+   FUNÇÕES DE DATA
    ========================================================= */
 
 function todayISO(){
 
-  const now = new Date();
+  const d = new Date();
 
-  const year = now.getFullYear();
+  return new Intl.DateTimeFormat(
+    "en-CA",
+    {
+      timeZone:"America/Sao_Paulo"
+    }
+  ).format(d);
 
-  const month = String(
-    now.getMonth() + 1
-  ).padStart(2,"0");
-
-  const day = String(
-    now.getDate()
-  ).padStart(2,"0");
-
-  return `${year}-${month}-${day}`;
 }
 
 
-function parseDateLocal(date){
+function addDays(dateString, days){
 
-  const [year,month,day] =
-    date.split("-").map(Number);
-
-  return new Date(
-    year,
-    month - 1,
-    day
-  );
-}
-
-
-function formatDate(date){
-
-  if(!date) return "";
-
-  const [year,month,day] =
-    date.split("-");
-
-  return `${day}/${month}/${year}`;
-}
-
-
-function addDays(date, days){
-
-  const d = parseDateLocal(date);
+  const d = new Date(dateString + "T12:00:00");
 
   d.setDate(
     d.getDate() + Number(days)
   );
 
-  const year = d.getFullYear();
+  return d.toISOString().slice(0,10);
 
-  const month = String(
-    d.getMonth() + 1
-  ).padStart(2,"0");
-
-  const day = String(
-    d.getDate()
-  ).padStart(2,"0");
-
-  return `${year}-${month}-${day}`;
 }
 
 
-function daysBetween(date1,date2){
+function formatDate(dateString){
 
-  const a = parseDateLocal(date1);
-  const b = parseDateLocal(date2);
+  if(!dateString){
+    return "";
+  }
 
-  return Math.round(
-    (b - a) / 86400000
-  );
+  const parts = dateString.split("-");
+
+  if(parts.length !== 3){
+    return dateString;
+  }
+
+  return `${parts[2]}/${parts[1]}/${parts[0]}`;
+
 }
 
 
@@ -618,143 +547,122 @@ function daysBetween(date1,date2){
 
 function calcScore(done, correct){
 
-  if(Number(done) <= 0){
+  if(done <= 0){
     return 0;
   }
 
   return Math.round(
-    (Number(correct) / Number(done)) * 100
+    (correct / done) * 100
   );
+
 }
 
 
 /* =========================================================
-   INTERVALO DA PRIMEIRA REVISÃO
+   INTERVALO DA PRÓXIMA REVISÃO
    ========================================================= */
 
-function interval(
-  score,
-  done,
-  difficulty,
-  priority
-){
+function interval(score, done, difficulty, priority){
 
   let days;
 
+  /*
+   * Base conforme desempenho
+   */
+
   if(score < 50){
+
     days = 1;
-  }
-  else if(score < 70){
+
+  }else if(score < 70){
+
     days = 3;
-  }
-  else if(score < 85){
+
+  }else if(score < 85){
+
     days = 7;
-  }
-  else if(score < 95){
+
+  }else{
+
     days = 14;
-  }
-  else{
-    days = 21;
+
   }
 
-  /*
-   * Mais questões feitas = um pouco mais de confiança.
-   */
-  if(Number(done) >= 50){
-    days += 2;
-  }
-  else if(Number(done) >= 20){
-    days += 1;
-  }
 
   /*
-   * Dificuldade.
+   * Poucas questões = intervalo menor
    */
+
+  if(done < 10){
+
+    days = Math.max(
+      1,
+      Math.floor(days / 2)
+    );
+
+  }
+
+
+  /*
+   * Dificuldade
+   */
+
   if(Number(difficulty) === 3){
-    days = Math.max(1, days - 2);
+
+    days = Math.max(
+      1,
+      Math.floor(days * 0.7)
+    );
+
+  }else if(Number(difficulty) === 1){
+
+    days = Math.ceil(
+      days * 1.2
+    );
+
   }
-  else if(Number(difficulty) === 2){
-    days = Math.max(1, days - 1);
-  }
+
 
   /*
-   * Prioridade alta exige revisão mais cedo.
+   * Prioridade
    */
+
   if(Number(priority) === 3){
-    days = Math.max(1, days - 2);
-  }
-  else if(Number(priority) === 2){
-    days = Math.max(1, days - 1);
+
+    days = Math.max(
+      1,
+      Math.floor(days * 0.7)
+    );
+
+  }else if(Number(priority) === 2){
+
+    days = Math.max(
+      1,
+      Math.floor(days * 0.85)
+    );
+
   }
 
-  return days;
+
+  return Math.max(1, days);
+
 }
 
 
 /* =========================================================
-   STATUS DA REVISÃO
+   MENSAGENS
    ========================================================= */
 
-function status(next){
+function showMessage(text, type){
 
-  const today = todayISO();
-
-  if(!next){
-    return "green";
-  }
-
-  if(next < today){
-    return "red";
-  }
-
-  if(next === today){
-    return "orange";
-  }
-
-  return "green";
-}
-
-
-function statusLabel(next){
-
-  const today = todayISO();
-
-  if(next < today){
-    return "ATRASADA";
-  }
-
-  if(next === today){
-    return "HOJE";
-  }
-
-  return "EM BREVE";
-}
-
-
-/* =========================================================
-   MENSAGEM
-   ========================================================= */
-
-function showMessage(text,type="success"){
-
-  const el =
+  const box =
     document.getElementById("message");
 
-  el.textContent = text;
+  box.textContent = text;
 
-  el.className =
+  box.className =
     "message " + type;
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-  setTimeout(() => {
-
-    el.className = "message";
-
-  },5000);
 }
 
 
@@ -765,42 +673,65 @@ function showMessage(text,type="success"){
 async function addSubject(){
 
   const matter =
-    document.getElementById("matter")
-      .value.trim();
+    document
+      .getElementById("matter")
+      .value
+      .trim();
 
   const subject =
-    document.getElementById("subject")
-      .value.trim();
+    document
+      .getElementById("subject")
+      .value
+      .trim();
 
   const date =
-    document.getElementById("date")
+    document
+      .getElementById("date")
       .value;
 
   const available =
-    +document.getElementById("available")
-      .value;
+    Number(
+      document
+        .getElementById("available")
+        .value
+    );
 
   const done =
-    +document.getElementById("done")
-      .value;
+    Number(
+      document
+        .getElementById("done")
+        .value
+    );
 
   const correct =
-    +document.getElementById("correct")
-      .value;
+    Number(
+      document
+        .getElementById("correct")
+        .value
+    );
 
   const difficulty =
-    +document.getElementById("difficulty")
-      .value;
+    Number(
+      document
+        .getElementById("difficulty")
+        .value
+    );
 
   const priority =
-    +document.getElementById("priority")
-      .value;
+    Number(
+      document
+        .getElementById("priority")
+        .value
+    );
 
+
+  /* VALIDAÇÕES */
 
   if(!matter || !subject || !date){
 
-    alert(
-      "Preencha matéria, assunto e data."
+    showMessage(
+      "Preencha matéria, assunto e data.",
+      "error"
     );
 
     return;
@@ -814,16 +745,22 @@ async function addSubject(){
     correct > done
   ){
 
-    alert(
-      "Confira as quantidades de questões e acertos."
+    showMessage(
+      "Confira as quantidades de questões e acertos.",
+      "error"
     );
 
     return;
   }
 
 
+  /* CÁLCULOS */
+
   const score =
-    calcScore(done,correct);
+    calcScore(
+      done,
+      correct
+    );
 
   const days =
     interval(
@@ -834,7 +771,10 @@ async function addSubject(){
     );
 
   const next =
-    addDays(date,days);
+    addDays(
+      date,
+      days
+    );
 
 
   /*
@@ -842,9 +782,9 @@ async function addSubject(){
    *
    * NÃO enviamos "percentual".
    *
-   * Essa coluna é GENERATED ALWAYS
-   * no Supabase e o banco calcula
-   * automaticamente.
+   * O Supabase calcula essa coluna
+   * automaticamente porque ela é
+   * uma coluna GENERATED ALWAYS.
    */
 
   const payload = {
@@ -872,7 +812,7 @@ async function addSubject(){
     ativo: true,
 
     questoes_necessarias:
-      Math.max(0,10-done),
+      Math.max(0, 10 - done),
 
     nivel_confianca:
       score >= 85
@@ -884,10 +824,17 @@ async function addSubject(){
   };
 
 
-  const { error } =
+  console.log(
+    "Enviando para Supabase:",
+    payload
+  );
+
+
+  const { data, error } =
     await db
       .from("assuntos")
-      .insert(payload);
+      .insert(payload)
+      .select();
 
 
   if(error){
@@ -907,29 +854,36 @@ async function addSubject(){
   }
 
 
-  document.getElementById("matter")
-    .value = "";
-
-  document.getElementById("subject")
-    .value = "";
-
-  document.getElementById("available")
-    .value = "0";
-
-  document.getElementById("done")
-    .value = "10";
-
-  document.getElementById("correct")
-    .value = "0";
+  console.log(
+    "Salvo:",
+    data
+  );
 
 
   showMessage(
     "Assunto salvo! Próxima revisão: " +
-    formatDate(next)
+    formatDate(next),
+    "success"
   );
 
 
+  /* LIMPA FORMULÁRIO */
+
+  document.getElementById("matter").value = "";
+
+  document.getElementById("subject").value = "";
+
+  document.getElementById("available").value = "0";
+
+  document.getElementById("done").value = "10";
+
+  document.getElementById("correct").value = "0";
+
+
+  /* ATUALIZA TELA */
+
   await render();
+
 }
 
 
@@ -942,14 +896,17 @@ async function loadData(){
   const {
     data,
     error
-  } = await db
-    .from("assuntos")
-    .select("*")
-    .eq("ativo",true)
-    .order(
-      "proxima_revisao",
-      { ascending:true }
-    );
+  } =
+    await db
+      .from("assuntos")
+      .select("*")
+      .eq("ativo", true)
+      .order(
+        "proxima_revisao",
+        {
+          ascending:true
+        }
+      );
 
 
   if(error){
@@ -960,7 +917,7 @@ async function loadData(){
     );
 
     showMessage(
-      "Não foi possível carregar os assuntos: " +
+      "Não foi possível carregar os dados: " +
       error.message,
       "error"
     );
@@ -971,6 +928,51 @@ async function loadData(){
 
 
   return data || [];
+
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+function status(next){
+
+  if(!next){
+
+    return {
+      type:"green",
+      text:"SEM DATA"
+    };
+
+  }
+
+  const today =
+    todayISO();
+
+  if(next < today){
+
+    return {
+      type:"red",
+      text:"ATRASADA"
+    };
+
+  }
+
+  if(next === today){
+
+    return {
+      type:"yellow",
+      text:"HOJE"
+    };
+
+  }
+
+  return {
+    type:"green",
+    text:"EM BREVE"
+  };
+
 }
 
 
@@ -980,13 +982,11 @@ async function loadData(){
 
 async function review(id){
 
-  const data =
-    await loadData();
-
   const current =
-    data.find(
-      a => a.id === id
-    );
+    (await loadData())
+      .find(
+        item => item.id === id
+      );
 
   if(!current){
     return;
@@ -1003,6 +1003,11 @@ async function review(id){
 
 
   if(!Number.isFinite(done) || done < 0){
+
+    alert(
+      "Quantidade inválida."
+    );
+
     return;
   }
 
@@ -1031,67 +1036,58 @@ async function review(id){
 
 
   const score =
-    calcScore(done,correct);
+    calcScore(
+      done,
+      correct
+    );
 
 
-  const newInterval =
+  const days =
     interval(
       score,
       done,
-      Number(current.dificuldade),
-      Number(current.prioridade)
+      current.dificuldade,
+      current.prioridade
     );
 
 
   const next =
     addDays(
       todayISO(),
-      newInterval
+      days
     );
 
 
-  const totalDone =
-    Number(current.questoes_feitas || 0)
-    + done;
+  const confidence =
+    score >= 85
+      ? "alta"
+      : score >= 70
+        ? "media"
+        : "baixa";
 
 
-  const totalCorrect =
-    Number(current.acertos || 0)
-    + correct;
-
-
-  const { error } =
+  const {
+    error
+  } =
     await db
       .from("assuntos")
       .update({
 
-        questoes_feitas:
-          totalDone,
+        questoes_feitas:done,
 
-        acertos:
-          totalCorrect,
+        acertos:correct,
 
-        data_conclusao:
-          todayISO(),
+        proxima_revisao:next,
 
-        proxima_revisao:
-          next,
+        indice_dominio:score,
 
-        indice_dominio:
-          score,
+        nivel_confianca:confidence,
 
         questoes_necessarias:
-          Math.max(0,10-done),
-
-        nivel_confianca:
-          score >= 85
-            ? "alta"
-            : score >= 70
-              ? "media"
-              : "baixa"
+          Math.max(0, 10 - done)
 
       })
-      .eq("id",id);
+      .eq("id", id);
 
 
   if(error){
@@ -1108,16 +1104,18 @@ async function review(id){
 
   showMessage(
     "Revisão registrada! Próxima revisão: " +
-    formatDate(next)
+    formatDate(next),
+    "success"
   );
 
 
-  await render();
+  render();
+
 }
 
 
 /* =========================================================
-   EXCLUIR ASSUNTO
+   EXCLUIR ITEM
    ========================================================= */
 
 async function removeItem(id){
@@ -1127,17 +1125,20 @@ async function removeItem(id){
       "Excluir este assunto?"
     )
   ){
+
     return;
   }
 
 
-  const { error } =
+  const {
+    error
+  } =
     await db
       .from("assuntos")
       .update({
         ativo:false
       })
-      .eq("id",id);
+      .eq("id", id);
 
 
   if(error){
@@ -1153,11 +1154,13 @@ async function removeItem(id){
 
 
   showMessage(
-    "Assunto excluído."
+    "Assunto excluído.",
+    "success"
   );
 
 
-  await render();
+  render();
+
 }
 
 
@@ -1172,23 +1175,26 @@ async function clearAll(){
       "Apagar todos os assuntos?"
     )
   ){
+
     return;
   }
 
 
-  const { error } =
+  const {
+    error
+  } =
     await db
       .from("assuntos")
       .update({
         ativo:false
       })
-      .eq("ativo",true);
+      .eq("ativo", true);
 
 
   if(error){
 
     showMessage(
-      "Erro ao apagar os dados: " +
+      "Erro ao apagar dados: " +
       error.message,
       "error"
     );
@@ -1198,31 +1204,18 @@ async function clearAll(){
 
 
   showMessage(
-    "Todos os dados foram apagados."
+    "Todos os assuntos foram apagados.",
+    "success"
   );
 
 
-  await render();
+  render();
+
 }
 
 
 /* =========================================================
-   ESCAPAR HTML
-   ========================================================= */
-
-function escapeHtml(value){
-
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-
-/* =========================================================
-   RENDERIZAR
+   RENDERIZAÇÃO
    ========================================================= */
 
 async function render(){
@@ -1235,270 +1228,265 @@ async function render(){
     todayISO();
 
 
-  const sevenDays =
-    addDays(today,7);
-
+  /* -------------------------
+     INDICADORES
+  ------------------------- */
 
   const overdue =
     data.filter(
-      a =>
-        a.proxima_revisao &&
-        a.proxima_revisao < today
-    );
+      item =>
+        item.proxima_revisao &&
+        item.proxima_revisao < today
+    ).length;
 
 
-  const todayItems =
+  const todayCount =
     data.filter(
-      a =>
-        a.proxima_revisao === today
+      item =>
+        item.proxima_revisao === today
+    ).length;
+
+
+  const limit =
+    addDays(
+      today,
+      7
     );
 
 
   const next7 =
     data.filter(
-      a =>
-        a.proxima_revisao > today &&
-        a.proxima_revisao <= sevenDays
+      item =>
+        item.proxima_revisao &&
+        item.proxima_revisao >= today &&
+        item.proxima_revisao <= limit
+    ).length;
+
+
+  const scores =
+    data
+      .map(
+        item =>
+          Number(item.indice_dominio)
+      )
+      .filter(
+        value =>
+          Number.isFinite(value)
+      );
+
+
+  let average = "—";
+
+
+  if(scores.length){
+
+    const avg =
+      scores.reduce(
+        (a,b) => a+b,
+        0
+      ) / scores.length;
+
+    average =
+      Math.round(avg) + "%";
+
+  }
+
+
+  document.getElementById(
+    "overdue"
+  ).textContent = overdue;
+
+
+  document.getElementById(
+    "today"
+  ).textContent = todayCount;
+
+
+  document.getElementById(
+    "next7"
+  ).textContent = next7;
+
+
+  document.getElementById(
+    "average"
+  ).textContent = average;
+
+
+  /* -------------------------
+     REVISÕES
+  ------------------------- */
+
+  const reviews =
+    document.getElementById(
+      "reviews"
     );
 
 
-  document.getElementById("overdue")
-    .textContent =
-      overdue.length;
+  const upcoming =
+    data.filter(
+      item =>
+        item.proxima_revisao &&
+        item.proxima_revisao <= limit
+    );
 
 
-  document.getElementById("today")
-    .textContent =
-      todayItems.length;
-
-
-  document.getElementById("next7")
-    .textContent =
-      next7.length;
-
-
-  /*
-   * O percentual vem calculado
-   * automaticamente pelo Supabase.
-   */
-
-  if(data.length){
-
-    const scores =
-      data
-        .map(a => Number(a.percentual))
-        .filter(
-          n => Number.isFinite(n)
-        );
-
-
-    if(scores.length){
-
-      const avg =
-        Math.round(
-          scores.reduce(
-            (sum,n) => sum+n,
-            0
-          ) / scores.length
-        );
-
-      document.getElementById("average")
-        .textContent =
-          avg + "%";
-
-    }
-    else{
-
-      document.getElementById("average")
-        .textContent =
-          "—";
-
-    }
-
-  }
-  else{
-
-    document.getElementById("average")
-      .textContent =
-        "—";
-
-  }
-
-
-  /* =====================================================
-     REVISÕES
-     ===================================================== */
-
-  const reviews =
-    document.getElementById("reviews");
-
-
-  if(!data.length){
+  if(!upcoming.length){
 
     reviews.innerHTML =
-      '<div class="empty">' +
-      'Nenhuma revisão nos próximos 7 dias. 🎉' +
-      '</div>';
+      '<div class="empty">Nenhuma revisão nos próximos 7 dias. 🎉</div>';
 
-  }
-  else{
+  }else{
 
-    const upcoming =
-      data
-        .filter(
-          a =>
-            a.proxima_revisao &&
-            a.proxima_revisao <= sevenDays
-        )
-        .sort(
-          (a,b) =>
-            a.proxima_revisao
-              .localeCompare(
-                b.proxima_revisao
-              )
-        );
-
-
-    if(!upcoming.length){
-
-      reviews.innerHTML =
-        '<div class="empty">' +
-        'Nenhuma revisão nos próximos 7 dias. 🎉' +
-        '</div>';
-
-    }
-    else{
-
-      reviews.innerHTML =
-        upcoming.map(a => {
+    reviews.innerHTML =
+      upcoming
+        .map(item => {
 
           const s =
-            status(a.proxima_revisao);
-
-          let badgeClass =
-            "green";
-
-          if(
-            a.proxima_revisao < today
-          ){
-            badgeClass = "red";
-          }
-          else if(
-            a.proxima_revisao === today
-          ){
-            badgeClass = "yellow";
-          }
+            status(
+              item.proxima_revisao
+            );
 
 
           return `
-            <div class="review-item">
 
-              <div class="review-top">
+            <div class="review">
 
-                <div>
+              <div class="review-title">
 
-                  <div class="review-title">
-                    ${escapeHtml(a.materia)}
-                    — ${escapeHtml(a.assunto)}
-                  </div>
+                ${escapeHtml(item.materia)}
+                —
+                ${escapeHtml(item.assunto)}
 
-                  <div class="review-date">
-                    Revisão:
-                    ${formatDate(a.proxima_revisao)}
-                    · ${Number(a.percentual || 0)}%
-                    · ${Number(a.questoes_feitas || 0)}
-                    questões
-                  </div>
-
-                </div>
-
-                <div>
-
-                  <span class="badge ${badgeClass}">
-                    ${statusLabel(a.proxima_revisao)}
-                  </span>
-
-                </div>
+                <span class="badge ${s.type}">
+                  ${s.text}
+                </span>
 
               </div>
 
-              <br>
+              <div class="review-info">
+
+                Revisão:
+                ${formatDate(item.proxima_revisao)}
+
+                •
+                ${Number(item.indice_dominio || 0)}%
+
+                •
+                ${item.questoes_feitas || 0}
+                questões
+
+              </div>
 
               <button
-                class="btn-review"
-                onclick="review(${a.id})"
+                onclick="review(${item.id})"
               >
                 Registrar revisão
               </button>
 
             </div>
+
           `;
 
-        }).join("");
-
-    }
+        })
+        .join("");
 
   }
 
 
-  /* =====================================================
+  /* -------------------------
      TODOS OS ASSUNTOS
-     ===================================================== */
+  ------------------------- */
 
   const all =
-    document.getElementById("all");
+    document.getElementById(
+      "all"
+    );
 
 
   if(!data.length){
 
     all.innerHTML =
-      '<div class="empty">' +
-      'Cadastre seu primeiro assunto acima.' +
-      '</div>';
+      '<div class="empty">Cadastre seu primeiro assunto acima.</div>';
+
+    return;
 
   }
-  else{
 
-    all.innerHTML =
-      data.map(a => {
+
+  all.innerHTML =
+    data
+      .map(item => {
 
         return `
-          <div class="subject-item">
 
-            <div>
+          <div class="subject">
 
-              <div class="subject-name">
-                ${escapeHtml(a.materia)}
-                — ${escapeHtml(a.assunto)}
-              </div>
+            <div class="subject-title">
 
-              <div class="subject-info">
-                ${Number(a.percentual || 0)}%
-                · ${Number(a.questoes_feitas || 0)}
-                questões
-                · próxima:
-                ${formatDate(a.proxima_revisao)}
-              </div>
+              ${escapeHtml(item.materia)}
+              —
+              ${escapeHtml(item.assunto)}
 
             </div>
 
-            <div class="actions">
+            <div class="subject-info">
 
-              <button
-                class="btn-delete"
-                onclick="removeItem(${a.id})"
-              >
-                Excluir
-              </button>
+              ${Number(item.indice_dominio || 0)}%
+              •
+              ${item.questoes_feitas || 0}
+              questões
+              •
+              próxima:
+              ${formatDate(item.proxima_revisao)}
 
             </div>
+
+            <button
+              style="
+                background:#fee2e2;
+                color:#b91c1c;
+                margin-top:8px;
+              "
+              onclick="removeItem(${item.id})"
+            >
+              Excluir
+            </button>
 
           </div>
+
         `;
 
-      }).join("");
+      })
+      .join("");
 
-  }
+}
+
+
+/* =========================================================
+   SEGURANÇA PARA TEXTO
+   ========================================================= */
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replace(
+      /[&<>"']/g,
+      function(match){
+
+        const chars = {
+
+          "&":"&amp;",
+          "<":"&lt;",
+          ">":"&gt;",
+          '"':"&quot;",
+          "'":"&#039;"
+
+        };
+
+        return chars[match];
+
+      }
+    );
 
 }
 
@@ -1509,13 +1497,13 @@ async function render(){
 
 document.addEventListener(
   "DOMContentLoaded",
-  async () => {
+  function(){
 
-    document.getElementById("date")
-      .value =
-      todayISO();
+    document.getElementById(
+      "date"
+    ).value = todayISO();
 
-    await render();
+    render();
 
   }
 );
