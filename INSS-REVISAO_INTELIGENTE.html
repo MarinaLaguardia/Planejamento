@@ -496,145 +496,61 @@ function addDays(date,days){
    ========================================================= */
 
 async function addSubject(){
+  const matter=document.getElementById("matter").value.trim();
+  const subject=document.getElementById("subject").value.trim();
+  const date=document.getElementById("date").value;
+  const available=+document.getElementById("available").value;
+  const done=+document.getElementById("done").value;
+  const correct=+document.getElementById("correct").value;
+  const difficulty=+document.getElementById("difficulty").value;
+  const priority=+document.getElementById("priority").value;
 
-  const matter =
-    document.getElementById("matter")
-    .value.trim();
-
-  const subject =
-    document.getElementById("subject")
-    .value.trim();
-
-  const date =
-    document.getElementById("date")
-    .value;
-
-  const available =
-    Number(document.getElementById("available").value);
-
-  const done =
-    Number(document.getElementById("done").value);
-
-  const correct =
-    Number(document.getElementById("correct").value);
-
-  const difficulty =
-    Number(document.getElementById("difficulty").value);
-
-  const priority =
-    Number(document.getElementById("priority").value);
-
-
-  if(!matter || !subject || !date){
-
-    showMessage(
-      "Preencha matéria, assunto e data.",
-      "error"
-    );
-
+  if(!matter||!subject||!date){
+    alert("Preencha matéria, assunto e data.");
     return;
-
   }
-
 
   if(
-    done < 0 ||
-    correct < 0 ||
-    available < 0 ||
-    correct > done
+    done<0 ||
+    correct<0 ||
+    available<0 ||
+    correct>done
   ){
-
-    showMessage(
-      "Confira as quantidades de questões e acertos.",
-      "error"
-    );
-
+    alert("Confira as quantidades de questões e acertos.");
     return;
-
   }
 
+  const score=calcScore(done,correct);
+  const days=interval(score,done,difficulty,priority);
+  const next=addDays(date,days);
 
-  const score =
-    calcScore(done,correct);
-
-  const days =
-    interval(
-      score,
-      done,
-      difficulty,
-      priority
-    );
-
-  const next =
-    addDays(date,days);
-
-
-  /*
-     IMPORTANTE:
-
-     NÃO enviamos "percentual".
-
-     Essa coluna é GENERATED ALWAYS
-     no Supabase e o próprio banco calcula.
-  */
-
-  const payload = {
-
-    materia: matter,
-
-    assunto: subject,
-
-    data_conclusao: date,
-
-    questoes_disponiveis: available,
-
-    questoes_feitas: done,
-
-    acertos: correct,
-
-    dificuldade: difficulty,
-
-    prioridade: priority,
-
-    proxima_revisao: next,
-
-    indice_dominio: score,
-
-    ativo: true,
-
-    questoes_necessarias:
-      Math.max(0,10-done),
-
-    nivel_confianca:
-      score >= 85
-      ? "alta"
-      : score >= 70
-      ? "media"
-      : "baixa"
-
+  const payload={
+    materia:matter,
+    assunto:subject,
+    data_conclusao:date,
+    questoes_disponiveis:available,
+    questoes_feitas:done,
+    acertos:correct,
+    dificuldade:difficulty,
+    prioridade:priority,
+    proxima_revisao:next,
+    indice_dominio:score,
+    ativo:true,
+    questoes_necessarias:Math.max(0,10-done),
+    nivel_confianca:score>=85?"alta":score>=70?"media":"baixa"
   };
 
-
-  const { error } =
-    await db
-      .from("assuntos")
-      .insert(payload);
-
+  const {error}=await db
+    .from("assuntos")
+    .insert(payload);
 
   if(error){
-
-    console.error(error);
-
     showMessage(
-      "Não foi possível salvar: " +
-      error.message,
+      "Não foi possível salvar: "+error.message,
       "error"
     );
-
     return;
-
   }
-
 
   document.getElementById("matter").value="";
   document.getElementById("subject").value="";
@@ -642,17 +558,12 @@ async function addSubject(){
   document.getElementById("done").value="10";
   document.getElementById("correct").value="0";
 
-
   showMessage(
-    "✅ Assunto salvo! Próxima revisão: " +
-    next
+    "Assunto salvo no Supabase. Próxima revisão: "+next
   );
 
-
-  await render();
-
+  render();
 }
-
 
 /* =========================================================
    CARREGAR DADOS
