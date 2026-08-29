@@ -132,7 +132,7 @@ label{font-size:13px;color:var(--muted);display:block;margin-bottom:5px}input,se
 <section class="panel">
 <h2>💾 Dados</h2>
 <p class="small">Esta versão usa somente as colunas que já faziam parte do HTML original para gravar no Supabase. Os critérios estratégicos novos ficam salvos no navegador para não exigir alteração imediata no banco.</p>
-<button onclick="exportJSON()">⬇️ Exportar JSON</button>
+<button onclick="testSupabase()">🔌 Testar conexão com Supabase</button><button onclick="exportJSON()">⬇️ Exportar JSON</button>
 <button class="secondary" onclick="exportCSV()">⬇️ Exportar CSV</button>
 <button class="danger" onclick="clearAll()">🗑️ Desativar todos os assuntos</button>
 </section>
@@ -150,7 +150,22 @@ const META_KEY="inss_ninja_metadata_v1";
 
 function getMeta(){try{return JSON.parse(localStorage.getItem(META_KEY)||"{}")}catch(e){return {}}}
 function saveMeta(m){localStorage.setItem(META_KEY,JSON.stringify(m))}
-function showMessage(text,type="ok"){const e=document.getElementById("message");e.textContent=text;e.className=type;setTimeout(()=>{e.className="";e.textContent=""},5000)}
+function metaKeyFor(x){return `${x.materia||""}::${x.assunto||""}::${x.data_conclusao||""}`}
+function metaFor(x){
+  const m=getMeta();
+  return m[String(x.id)] || m[metaKeyFor(x)] || {};
+}
+function showMessage(text,type="ok"){
+  const e=document.getElementById("message");
+  e.textContent=text;
+  e.className=type;
+  setTimeout(()=>{e.className="";e.textContent=""},8000);
+}
+function connectionContext(){
+  return location.protocol==="file:"
+    ? "Você abriu o HTML como arquivo local (file://). O cálculo funciona, mas o navegador pode bloquear a comunicação com o Supabase. Para testar o salvamento, abra o GitHub Pages."
+    : `Origem atual: ${location.origin}`;
+}
 function score(done,correct){return done>0?Math.round(correct/done*100):0}
 function intervalSuggested(percentual, dificuldade, prioridadeAssunto, prioridadeMateria, questoesFeitas=0){
   percentual = Number(percentual) || 0;
@@ -178,7 +193,7 @@ function intervalSuggested(percentual, dificuldade, prioridadeAssunto, prioridad
 }
 function addDays(date,days){const d=new Date(date+"T12:00:00");d.setDate(d.getDate()+days);return d.toISOString().slice(0,10)}
 function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
-function metaFor(id){return getMeta()[String(id)]||{}}
+// metaFor(x) is defined above and accepts the full Supabase row.
 
 async function loadData(){
   const {data,error}=await db.from("assuntos").select("*").eq("ativo",true).order("proxima_revisao",{ascending:true,nullsFirst:false});
@@ -206,23 +221,87 @@ function previewInterval(){
 }
 
 async function addSubject(){
-  const matter=document.getElementById("matter").value.trim(),subject=document.getElementById("subject").value.trim(),lesson=document.getElementById("lesson").value.trim();
-  const lessonPriority=document.getElementById("lessonPriority").value,matterPriority=+document.getElementById("matterPriority").value,priority=+document.getElementById("priority").value;
-  const date=document.getElementById("date").value,available=+document.getElementById("available").value,done=+document.getElementById("done").value,correct=+document.getElementById("correct").value,diff=+document.getElementById("difficulty").value;
+  const matter=document.getElementById("matter").value.trim();
+  const subject=document.getElementById("subject").value.trim();
+  const lesson=document.getElementById("lesson").value.trim();
+  const lessonPriority=document.getElementById("lessonPriority").value;
+  const matterPriority=Number(document.getElementById("matterPriority").value)||4;
+  const priority=Number(document.getElementById("priority").value)||2;
+  const date=document.getElementById("date").value;
+  const available=Number(document.getElementById("available").value)||0;
+  const done=Number(document.getElementById("done").value)||0;
+  const correct=Number(document.getElementById("correct").value)||0;
+  const diff=Number(document.getElementById("difficulty").value)||2;
+
   if(!matter||!subject||!date){alert("Preencha matéria, assunto e data.");return}
   if(done<0||correct<0||available<0||correct>done){alert("Confira as quantidades de questões e acertos.");return}
-  const s=score(done,correct),suggested=intervalSuggested(s,diff,priority,matterPriority,done),customRaw=document.getElementById("customInterval").value.trim();
-  const custom=customRaw?Math.max(1,+customRaw):null,next=addDays(date,custom||suggested);
-  const nivel=s>=85?"alta":s>=70?"media":"baixa"; const payload={materia:matter,assunto:subject,data_conclusao:date,questoes_disponiveis:available,questoes_feitas:done,acertos:correct,percentual:s,dificuldade:diff,prioridade:priority,proxima_revisao:next,indice_dominio:s,ativo:true,questoes_necessarias:Math.max(0,10-done),nivel_confianca:nivel};
-  const {error}=await db.from("assuntos").insert(payload);
-  if(error){showMessage("Não foi possível salvar: "+error.message,"error");return}
-  const m=getMeta(); const localKey=`${matter}::${subject}::${date}`; m[localKey]={apostila:lesson,apostilaPeso:lessonPriority,materiaPrioridade:matterPriority,prioridadeAssunto:priority,dificuldade:diff,intervaloSugerido:suggested,intervaloPersonalizado:custom,proximaPersonalizada:next}; saveMeta(m);
-  ["matter","subject","lesson"].forEach(id=>document.getElementById(id).value="");document.getElementById("available").value="0";document.getElementById("done").value="0";document.getElementById("correct").value="0";document.getElementById("customInterval").value="";
-  showMessage("Assunto salvo. Próxima revisão: "+next+(custom?" (intervalo personalizado)":" (sugestão do sistema)"));showTab("painel");render();
-}
 
+  if(location.protocol==="file:"){
+    showMessage("O cálculo funciona localmente, mas o salvamento no Supabase deve ser testado pelo endereço do GitHub Pages. "+connectionContext(),"error");
+    return;
+  }
+
+  const s=score(done,correct);
+  const suggested=intervalSuggested(s,diff,priority,matterPriority,done);
+  const customRaw=document.getElementById("customInterval").value.trim();
+  const custom=customRaw?Math.max(1,Number(customRaw)):null;
+  const next=addDays(date,custom||suggested);
+  const nivel=s>=85?"alta":s>=70?"media":"baixa";
+
+  const payload={
+    materia:matter,
+    assunto:subject,
+    data_conclusao:date,
+    questoes_disponiveis:available,
+    questoes_feitas:done,
+    acertos:correct,
+    percentual:s,
+    dificuldade:diff,
+    prioridade:priority,
+    proxima_revisao:next,
+    indice_dominio:s,
+    ativo:true,
+    questoes_necessarias:Math.max(0,10-done),
+    nivel_confianca:nivel
+  };
+
+  try{
+    const {error}=await db.from("assuntos").insert(payload);
+    if(error){
+      showMessage(`Supabase recusou o cadastro (${error.code||"sem código"}): ${error.message}. ${error.details||""} ${error.hint||""}`,"error");
+      return;
+    }
+
+    const m=getMeta();
+    const key=metaKeyFor(payload);
+    m[key]={
+      apostila:lesson,
+      apostilaPeso:lessonPriority,
+      materiaPrioridade:matterPriority,
+      prioridadeAssunto:priority,
+      dificuldade:diff,
+      intervaloSugerido:suggested,
+      intervaloPersonalizado:custom,
+      proximaPersonalizada:next
+    };
+    saveMeta(m);
+
+    ["matter","subject","lesson"].forEach(id=>document.getElementById(id).value="");
+    document.getElementById("available").value="0";
+    document.getElementById("done").value="0";
+    document.getElementById("correct").value="0";
+    document.getElementById("customInterval").value="";
+    previewInterval();
+
+    showMessage(`Assunto salvo no Supabase. Próxima revisão: ${next}${custom?" (intervalo personalizado)":""}`,"ok");
+    showTab("painel");
+    render();
+  }catch(err){
+    showMessage(`Falha de comunicação com o Supabase: ${err?.name||"Erro"} — ${err?.message||String(err)}. ${connectionContext()}`,"error");
+  }
+}
 function rank(x){
-  const m=metaFor(x.id),due=x.proxima_revisao&&x.proxima_revisao<=todayISO();
+  const m=metaFor(x),due=x.proxima_revisao&&x.proxima_revisao<=todayISO();
   return (x.percentual<70?1000:0)+(m.materiaPrioridade?((5-m.materiaPrioridade)*120):0)+(m.prioridadeAssunto||1)*100+(due?300:0)-(x.percentual||0);
 }
 
@@ -235,19 +314,74 @@ function showTab(id){
 }
 
 async function review(id){
-  const current=(await loadData()).find(a=>a.id===id);if(!current)return;
-  const d=prompt("Quantas questões você fez nesta revisão?",String(current.questoes_feitas??0));if(d===null)return;
-  const c=prompt("Quantas acertou?",String(current.acertos??0));if(c===null)return;
-  const done=+d,correct=+c;if(!Number.isFinite(done)||!Number.isFinite(correct)||done<0||correct<0||correct>done){alert("Valores inválidos.");return}
-  const m=metaFor(id),s=score(done,correct),suggested=intervalSuggested(s,m.dificuldade||2,m.prioridadeAssunto||2,m.materiaPrioridade||1,done),custom=m.intervaloPersonalizado||null,next=addDays(todayISO(),custom||suggested);
-  const {error}=await db.from("assuntos").update({questoes_feitas:done,acertos:correct,percentual:s,indice_dominio:s,questoes_necessarias:Math.max(0,10-done),proxima_revisao:next}).eq("id",id);
-  if(error){showMessage("Erro ao registrar revisão: "+error.message,"error");return}
-  const mm=getMeta();mm[String(id)]={...m,intervaloSugerido:suggested,proximaPersonalizada:next};saveMeta(mm);
-  showMessage("Revisão registrada. "+(custom?"Seu intervalo personalizado foi mantido. ":"")+"Próxima: "+next);render();
-}
+  const current=(await loadData()).find(a=>a.id===id);
+  if(!current)return;
 
+  const d=prompt("Quantas questões você fez nesta revisão?",String(current.questoes_feitas??0));
+  if(d===null)return;
+  const c=prompt("Quantas acertou?",String(current.acertos??0));
+  if(c===null)return;
+
+  const done=Number(d),correct=Number(c);
+  if(!Number.isFinite(done)||!Number.isFinite(correct)||done<0||correct<0||correct>done){
+    alert("Valores inválidos.");return;
+  }
+
+  const m=metaFor(current);
+  const s=score(done,correct);
+  const suggested=intervalSuggested(
+    s,
+    m.dificuldade||current.dificuldade||2,
+    m.prioridadeAssunto||current.prioridade||2,
+    m.materiaPrioridade||4,
+    done
+  );
+  const custom=m.intervaloPersonalizado||null;
+  const next=addDays(todayISO(),custom||suggested);
+
+  const {error}=await db.from("assuntos").update({
+    questoes_feitas:done,
+    acertos:correct,
+    percentual:s,
+    indice_dominio:s,
+    questoes_necessarias:Math.max(0,10-done),
+    proxima_revisao:next,
+    nivel_confianca:s>=85?"alta":s>=70?"media":"baixa"
+  }).eq("id",id);
+
+  if(error){
+    showMessage(`Erro ao registrar revisão (${error.code||"sem código"}): ${error.message} ${error.details||""}`,"error");
+    return;
+  }
+
+  const mm=getMeta();
+  const key=metaKeyFor(current);
+  mm[String(id)]={...m,intervaloSugerido:suggested,proximaPersonalizada:next};
+  mm[key]={...mm[key],...mm[String(id)]};
+  saveMeta(mm);
+
+  showMessage("Revisão registrada. "+(custom?"Seu intervalo personalizado foi mantido. ":"")+"Próxima: "+next);
+  render();
+}
 async function removeItem(id){if(!confirm("Excluir este assunto?"))return;const {error}=await db.from("assuntos").update({ativo:false}).eq("id",id);if(error){showMessage("Erro ao excluir: "+error.message,"error");return}render()}
 async function clearAll(){if(!confirm("Desativar todos os assuntos?"))return;const {error}=await db.from("assuntos").update({ativo:false}).eq("ativo",true);if(error){showMessage("Erro ao apagar: "+error.message,"error");return}render()}
+
+async function testSupabase(){
+  if(location.protocol==="file:"){
+    showMessage("Teste interrompido: este arquivo está sendo aberto como file://. Publique no GitHub Pages e teste por lá. O Supabase pode bloquear requisições originadas de arquivos locais.","error");
+    return;
+  }
+  try{
+    const {error}=await db.from("assuntos").select("id").limit(1);
+    if(error){
+      showMessage(`Conexão chegou ao Supabase, mas a consulta foi recusada (${error.code||"sem código"}): ${error.message} ${error.details||""} ${error.hint||""}`,"error");
+      return;
+    }
+    showMessage("✅ Conexão com o Supabase funcionando. A tabela assuntos respondeu normalmente.","ok");
+  }catch(err){
+    showMessage(`❌ Falha de rede: ${err?.name||"Erro"} — ${err?.message||String(err)}`,"error");
+  }
+}
 
 async function render(){
   const data=await loadData(),t=todayISO(),week=addDays(t,7);
@@ -256,18 +390,18 @@ async function render(){
   document.getElementById("overdue").textContent=overdue;document.getElementById("today").textContent=today;document.getElementById("week").textContent=w;document.getElementById("avg").textContent=data.length?Math.round(sum/data.length)+"%":"—";document.getElementById("critical").textContent=critical;
   const sorted=[...data].sort((a,b)=>rank(b)-rank(a));
   document.getElementById("priorityList").innerHTML=sorted.slice(0,10).map(x=>{
-    const m=metaFor(x.id),s=x.percentual??0,peso=m.apostilaPeso||"green",pesoTxt={red:"60–65% — máxima",orange:"20–25% — alta",yellow:"10–15% — média",green:"Restante — manutenção"}[peso]||"—";
+    const m=metaFor(x),s=x.percentual??0,peso=m.apostilaPeso||"green",pesoTxt={red:"60–65% — máxima",orange:"20–25% — alta",yellow:"10–15% — média",green:"Restante — manutenção"}[peso]||"—";
     return `<div class="item"><div style="flex:1"><div class="subject">${esc(x.materia)} — ${esc(x.assunto)}</div><div class="meta">${s}% · ${x.questoes_feitas??0} questões · ${esc(m.apostila||"Apostila não definida")}</div><div class="meta">${pesoTxt} · próxima: ${x.proxima_revisao||"—"}</div></div><span class="badge ${s<70?"red":s<85?"yellow":"green"}">${s<70?"🔴 CRÍTICO":s<85?"🟡 ATENÇÃO":"🟢 CONSOLIDADO"}</span></div>`
   }).join("")||'<div class="empty">Nenhum assunto cadastrado.</div>';
 
   const due=data.filter(x=>x.proxima_revisao&&x.proxima_revisao<=week).sort((a,b)=>(a.proxima_revisao||"9999").localeCompare(b.proxima_revisao||"9999"));
   document.getElementById("reviewList").innerHTML=due.map(x=>{
-    const [cl,txt]=status(x.proxima_revisao),m=metaFor(x.id),s=x.percentual??0;
+    const [cl,txt]=status(x.proxima_revisao),m=metaFor(x),s=x.percentual??0;
     return `<div class="item"><div><div class="subject">${esc(x.materia)} — ${esc(x.assunto)}</div><div class="meta">${x.proxima_revisao===t?"Revisar hoje":x.proxima_revisao<t?"Atrasada":"Revisão: "+x.proxima_revisao} · ${s}%</div><div class="meta">🤖 Sugestão: ${m.intervaloSugerido||"—"} dias ${m.intervaloPersonalizado?`· ✏️ Você escolheu: ${m.intervaloPersonalizado} dias`:""}</div></div><div><span class="badge ${cl}">${txt}</span><button class="secondary" onclick="review(${x.id})">Registrar</button></div></div>`
   }).join("")||'<div class="empty">Nenhuma revisão nos próximos 7 dias. 🎉</div>';
 
   const crit=sorted.filter(x=>(x.percentual||0)<70).slice(0,6);
-  document.getElementById("weekStrategy").innerHTML=crit.length?crit.map(x=>{const m=metaFor(x.id);return `<div class="item crit"><div><div class="subject">🔴 ${esc(x.materia)} — ${esc(x.assunto)}</div><div class="meta">Aproveitamento: ${x.percentual??0}% · ${esc(m.apostila||"Apostila não definida")}</div><div class="meta">Ação: revisão ativa + questões. Não precisa esgotar todos os assuntos nesta semana.</div></div><span class="badge red">FOCO</span></div>`}).join(""):'<div class="empty">Nenhum assunto abaixo de 70%. Excelente: a semana pode privilegiar manutenção e novas questões.</div>';
+  document.getElementById("weekStrategy").innerHTML=crit.length?crit.map(x=>{const m=metaFor(x);return `<div class="item crit"><div><div class="subject">🔴 ${esc(x.materia)} — ${esc(x.assunto)}</div><div class="meta">Aproveitamento: ${x.percentual??0}% · ${esc(m.apostila||"Apostila não definida")}</div><div class="meta">Ação: revisão ativa + questões. Não precisa esgotar todos os assuntos nesta semana.</div></div><span class="badge red">FOCO</span></div>`}).join(""):'<div class="empty">Nenhum assunto abaixo de 70%. Excelente: a semana pode privilegiar manutenção e novas questões.</div>';
 }
 
 async function exportJSON(){download("revisao-inss-ninja.json",JSON.stringify(await loadData(),null,2),"application/json")}
