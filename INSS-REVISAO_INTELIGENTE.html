@@ -3,1512 +3,250 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Revisão Inteligente</title>
-
+<title>INSS — Painel Ninja de Revisão</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-:root{
-  --bg:#f5f7fb;
-  --card:#ffffff;
-  --text:#172033;
-  --muted:#687386;
-  --line:#e4e8ef;
-  --accent:#4f46e5;
-  --danger:#dc2626;
-  --success:#16a34a;
-  --warning:#f59e0b;
-}
-
-*{
-  box-sizing:border-box;
-}
-
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-
-header{
-  background:#111827;
-  color:white;
-  padding:18px;
-}
-
-header h1{
-  margin:0 0 6px;
-  font-size:24px;
-}
-
-header p{
-  margin:0;
-  color:#dbe3ef;
-}
-
-main{
-  max-width:1100px;
-  margin:0 auto;
-  padding:18px;
-}
-
-.message{
-  padding:12px 14px;
-  border-radius:10px;
-  margin-bottom:14px;
-  display:none;
-}
-
-.message.error{
-  display:block;
-  background:#fee2e2;
-  color:#b91c1c;
-}
-
-.message.success{
-  display:block;
-  background:#dcfce7;
-  color:#166534;
-}
-
-.cards{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-  margin-bottom:18px;
-}
-
-.card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:16px;
-  box-shadow:0 2px 8px rgba(0,0,0,.04);
-}
-
-.metric{
-  font-size:28px;
-  font-weight:bold;
-}
-
-.label{
-  color:var(--muted);
-  margin-top:6px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:18px;
-}
-
-.panel{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:16px;
-  box-shadow:0 2px 8px rgba(0,0,0,.04);
-}
-
-.panel h2{
-  margin-top:0;
-  font-size:19px;
-}
-
-.row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-label{
-  display:block;
-  color:#526176;
-  font-size:13px;
-  margin-bottom:5px;
-}
-
-input,
-select{
-  width:100%;
-  padding:11px;
-  border:1px solid #cfd7e5;
-  border-radius:9px;
-  font-size:14px;
-  background:white;
-}
-
-.field{
-  margin-bottom:10px;
-}
-
-button{
-  border:0;
-  border-radius:9px;
-  padding:12px 16px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.primary{
-  width:100%;
-  background:var(--accent);
-  color:white;
-  margin-top:4px;
-}
-
-.primary:hover{
-  opacity:.9;
-}
-
-.danger{
-  width:100%;
-  background:#fee2e2;
-  color:#b91c1c;
-  margin-top:14px;
-}
-
-.review{
-  border-bottom:1px solid var(--line);
-  padding:12px 0;
-}
-
-.review:last-child{
-  border-bottom:0;
-}
-
-.review-title{
-  font-weight:bold;
-  font-size:16px;
-}
-
-.review-info{
-  color:var(--muted);
-  font-size:13px;
-  margin-top:6px;
-}
-
-.review button{
-  background:#eef2ff;
-  color:#3730a3;
-  margin-top:8px;
-}
-
-.subject{
-  padding:14px 0;
-  border-bottom:1px solid var(--line);
-}
-
-.subject:last-child{
-  border-bottom:0;
-}
-
-.subject-title{
-  font-weight:bold;
-  font-size:16px;
-}
-
-.subject-info{
-  color:var(--muted);
-  font-size:13px;
-  margin-top:5px;
-}
-
-.empty{
-  color:var(--muted);
-  padding:10px 0;
-}
-
-.small-note{
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.5;
-  margin-top:10px;
-}
-
-.badge{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:999px;
-  font-size:11px;
-  font-weight:bold;
-  margin-left:8px;
-}
-
-.badge.green{
-  background:#dcfce7;
-  color:#166534;
-}
-
-.badge.yellow{
-  background:#fef3c7;
-  color:#92400e;
-}
-
-.badge.red{
-  background:#fee2e2;
-  color:#b91c1c;
-}
-
-@media(max-width:760px){
-  main{
-    padding:12px;
-  }
-
-  .cards{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .grid{
-    grid-template-columns:1fr;
-  }
-}
-
-@media(max-width:480px){
-  .row{
-    grid-template-columns:1fr;
-  }
-
-  .cards{
-    grid-template-columns:1fr 1fr;
-  }
-}
+:root{--bg:#f4f6fb;--card:#fff;--text:#172033;--muted:#687386;--line:#e1e6ef;--accent:#4f46e5;--danger:#dc2626;--ok:#15803d;--warn:#b45309}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{background:#111827;color:#fff;padding:22px 18px}header h1{margin:0 0 6px;font-size:25px}header p{margin:0;color:#cbd5e1}
+main{max-width:1180px;margin:auto;padding:18px}.tabs{display:flex;gap:8px;overflow:auto;margin-bottom:16px}.tab{width:auto;margin:0;background:#fff;color:#374151;border:1px solid var(--line)}.tab.active{background:var(--accent);color:#fff}
+.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 2px 8px #00000008}.metric{font-size:28px;font-weight:800}.label{color:var(--muted);font-size:12px;margin-top:4px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}h2{font-size:18px;margin:0 0 14px}h3{font-size:15px;margin:16px 0 8px}
+label{font-size:13px;color:var(--muted);display:block;margin-bottom:5px}input,select,button{width:100%;padding:11px;border:1px solid #d6dbe5;border-radius:9px;font-size:14px;background:#fff}button{background:var(--accent);color:#fff;border:0;font-weight:700;cursor:pointer;margin-top:10px}button.secondary{background:#eef0ff;color:#3730a3}button.ghost{background:#fff;color:#374151;border:1px solid var(--line)}button.danger{background:#fee2e2;color:#991b1b}
+.item{padding:12px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center}.item:last-child{border-bottom:0}.subject{font-weight:750}.meta{font-size:12px;color:var(--muted);margin-top:4px}.badge{padding:5px 8px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap}.red{background:#fee2e2;color:#991b1b}.orange{background:#ffedd5;color:#9a3412}.yellow{background:#fef3c7;color:#92400e}.green{background:#dcfce7;color:#166534}.blue{background:#dbeafe;color:#1d4ed8}
+.small{font-size:12px;color:var(--muted);line-height:1.5}.hidden{display:none!important}.empty{color:var(--muted);font-size:14px;padding:8px 0}
+.rulebox{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:13px;margin-top:12px}.rulebox strong{display:block;margin-bottom:7px}.rule{padding:7px 0;border-top:1px dashed #dce2eb;font-size:12px;line-height:1.4}.rule:first-of-type{border-top:0}.strategy{background:#eef0ff;border-left:4px solid var(--accent);padding:12px;border-radius:9px;font-size:13px;line-height:1.45}
+.topicbar{height:9px;background:#edf0f5;border-radius:99px;overflow:hidden;margin-top:6px}.topicbar div{height:100%;background:var(--accent)}
+.crit{border-left:4px solid var(--danger);padding-left:10px}.fieldnote{font-size:11px;color:var(--muted);margin-top:4px}.choice{display:flex;gap:8px;align-items:center;background:#f8fafc;border:1px solid var(--line);padding:9px;border-radius:9px}.choice input{width:auto}
+#message{margin:12px 0;padding:10px;border-radius:9px;display:none;font-size:13px}#message.ok{display:block;background:#dcfce7;color:#166534}#message.error{display:block;background:#fee2e2;color:#991b1b}
+@media(max-width:950px){.cards{grid-template-columns:repeat(3,1fr)}}@media(max-width:760px){.cards{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.row{grid-template-columns:1fr 1fr}}@media(max-width:480px){.row{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}header h1{font-size:21px}main{padding:12px}}
 </style>
 </head>
-
 <body>
-
 <header>
-  <h1>🧠 Revisão Inteligente</h1>
-  <p>Seu calendário de revisão adaptativa para concursos</p>
+<h1>🧠🪖 Painel Ninja — Revisão Inteligente INSS</h1>
+<p>Prioridade estratégica + desempenho real + revisão ativa.</p>
 </header>
-
 <main>
+<div id="message"></div>
 
-  <div id="message" class="message"></div>
+<div class="tabs">
+<button class="tab active" data-tab="painel" onclick="showTab('painel')">📊 Painel</button>
+<button class="tab" data-tab="cadastro" onclick="showTab('cadastro')">➕ Cadastrar</button>
+<button class="tab" data-tab="estrategia" onclick="showTab('estrategia')">🧭 Estratégia</button>
+<button class="tab" data-tab="dados" onclick="showTab('dados')">💾 Dados</button>
+</div>
 
-  <!-- INDICADORES -->
-  <section class="cards">
+<section id="painel">
+<div class="cards">
+<div class="card"><div class="metric" id="overdue">0</div><div class="label">🔴 Atrasadas</div></div>
+<div class="card"><div class="metric" id="today">0</div><div class="label">🟠 Revisar hoje</div></div>
+<div class="card"><div class="metric" id="week">0</div><div class="label">🟡 Próximos 7 dias</div></div>
+<div class="card"><div class="metric" id="avg">—</div><div class="label">📊 Domínio médio</div></div>
+<div class="card"><div class="metric" id="critical">0</div><div class="label">🚨 Críticos</div></div>
+</div>
 
-    <div class="card">
-      <div id="overdue" class="metric">0</div>
-      <div class="label">🔴 Atrasadas</div>
-    </div>
+<div class="grid">
+<section class="panel">
+<h2>🔥 Prioridades agora</h2>
+<div id="priorityList"><div class="empty">Carregando...</div></div>
+</section>
+<section class="panel">
+<h2>📅 Fila de revisões</h2>
+<div id="reviewList"><div class="empty">Carregando...</div></div>
+</section>
+</div>
 
-    <div class="card">
-      <div id="today" class="metric">0</div>
-      <div class="label">🟠 Hoje</div>
-    </div>
+<section class="panel" style="margin-top:18px">
+<h2>🎯 Estratégia da semana</h2>
+<div id="weekStrategy"></div>
+</section>
 
-    <div class="card">
-      <div id="next7" class="metric">0</div>
-      <div class="label">🟡 Próximos 7 dias</div>
-    </div>
+<section class="panel" style="margin-top:18px">
+<h2>🧠 Como o Ninja decide?</h2>
+<div class="rulebox">
+<strong>5 regras que você deve lembrar</strong>
+<div class="rule">1️⃣ <b>Matéria</b> define o espaço estratégico da semana.</div>
+<div class="rule">2️⃣ <b>Apostila</b> define o peso dentro da matéria.</div>
+<div class="rule">3️⃣ <b>Assunto</b> é ajustado pelo seu desempenho: quanto pior o aproveitamento, maior a urgência.</div>
+<div class="rule">4️⃣ <b>Revisão ativa</b>: priorizamos questões, recuperação ativa e identificação de falhas — não simples releitura.</div>
+<div class="rule">5️⃣ <b>Intervalo sugerido</b> é uma recomendação. Você pode alterar e assumir o controle.</div>
+</div>
+</section>
+</section>
 
-    <div class="card">
-      <div id="average" class="metric">—</div>
-      <div class="label">📊 Domínio médio</div>
-    </div>
+<section id="cadastro" class="hidden">
+<section class="panel">
+<h2>➕ Cadastrar assunto</h2>
+<div class="row">
+<div><label>Matéria</label><input id="matter" placeholder="Ex.: Direito Previdenciário"><div class="fieldnote">P1 = Essencial · P2 = Alta · P3 = Média · P4 = Manutenção</div></div>
+<div><label>Assunto</label><input id="subject" placeholder="Ex.: Segurados"></div>
+<div><label>Apostila / Aula</label><input id="lesson" placeholder="Ex.: Aula 01 — Segurados"><div class="fieldnote">Use para lembrar o peso estratégico da aula.</div></div>
+<div><label>Faixa estratégica da apostila</label><select id="lessonPriority"><option value="red">🔴 60–65% — prioridade máxima</option><option value="orange">🟠 20–25% — prioridade alta</option><option value="yellow">🟡 10–15% — prioridade média</option><option value="green">🟢 Restante — manutenção</option></select></div>
+<div><label>Prioridade da matéria</label><select id="matterPriority"><option value="4">P4 — Manutenção</option><option value="3">P3 — Média</option><option value="2">P2 — Alta</option><option value="1" selected>P1 — Essencial</option></select></div>
+<div><label>Prioridade do assunto</label><select id="priority"><option value="1">Normal</option><option value="2" selected>Alta</option><option value="3">🔥 Muito alta</option></select></div>
+<div><label>Data de conclusão</label><input id="date" type="date"></div>
+<div><label>Questões disponíveis</label><input id="available" type="number" min="0" value="0"></div>
+<div><label>Questões feitas</label><input id="done" type="number" min="0" value="0"></div>
+<div><label>Acertos</label><input id="correct" type="number" min="0" value="0"></div>
+<div><label>Dificuldade</label><select id="difficulty"><option value="1">Fácil</option><option value="2" selected>Média</option><option value="3">Difícil</option></select></div>
+</div>
 
-  </section>
+<div class="rulebox">
+<strong>⏱️ Intervalo da próxima revisão</strong>
+<div class="row">
+<div><label>🤖 Sugestão automática (dias)</label><input id="suggested" type="number" readonly></div>
+<div><label>✏️ Intervalo escolhido por você (dias)</label><input id="customInterval" type="number" min="1" placeholder="Deixe vazio para usar a sugestão"><div class="fieldnote">Se preencher, sua escolha vence a sugestão.</div></div>
+</div>
+<button class="secondary" onclick="previewInterval()">🧠 Calcular sugestão</button>
+</div>
 
-  <section class="grid">
+<button onclick="addSubject()">💾 Salvar assunto</button>
+</section>
+</section>
 
-    <!-- CADASTRO -->
-    <section class="panel">
+<section id="estrategia" class="hidden">
+<section class="panel">
+<h2>🧭 Seu mapa estratégico</h2>
+<div class="strategy">
+<b>Ordem das matérias:</b><br>
+🥇 Direito Previdenciário → 🥈 Português → 🥉 Direito Constitucional → Direito Administrativo → Raciocínio Lógico → Internet → Ética.
+<br><br>
+<b>Dias fortes:</b> segunda, sexta e domingo.<br>
+<b>Dias mais espaçados:</b> terça, quarta e quinta.<br>
+<b>Regra de adaptação:</b> se uma matéria crítica estiver com aproveitamento baixo, ela pode ganhar espaço excepcionalmente na semana seguinte.
+</div>
+<h3>📚 Previdenciário — peso das apostilas</h3>
+<div class="rulebox">
+<div class="rule">🔴 <b>60–65%</b> — Aulas 00, 01, 02, 04, 06, 07, 08 e 09</div>
+<div class="rule">🟠 <b>20–25%</b> — Aulas 03, 05, 11 e 14</div>
+<div class="rule">🟡 <b>10–15%</b> — Aulas 10, 13, 15, 16 e 17</div>
+<div class="rule">🟢 <b>Restante</b> — Aulas 12, 18 e 19</div>
+</div>
+<h3>📌 Como interpretar</h3>
+<p class="small">A prioridade estratégica não significa abandonar os assuntos menos importantes. Significa distribuir melhor o tempo: primeiro os temas com maior retorno provável, depois manutenção e revisões mais espaçadas.</p>
+</section>
+</section>
 
-      <h2>➕ Cadastrar assunto</h2>
-
-      <div class="row">
-
-        <div class="field">
-          <label for="matter">Matéria</label>
-          <input
-            id="matter"
-            type="text"
-            placeholder="Ex.: Direito Previdenciário"
-          >
-        </div>
-
-        <div class="field">
-          <label for="subject">Assunto</label>
-          <input
-            id="subject"
-            type="text"
-            placeholder="Ex.: Segurados"
-          >
-        </div>
-
-      </div>
-
-      <div class="row">
-
-        <div class="field">
-          <label for="date">Data de conclusão</label>
-          <input
-            id="date"
-            type="date"
-          >
-        </div>
-
-        <div class="field">
-          <label for="available">Questões disponíveis</label>
-          <input
-            id="available"
-            type="number"
-            min="0"
-            value="0"
-          >
-        </div>
-
-      </div>
-
-      <div class="row">
-
-        <div class="field">
-          <label for="done">Questões feitas</label>
-          <input
-            id="done"
-            type="number"
-            min="0"
-            value="10"
-          >
-        </div>
-
-        <div class="field">
-          <label for="correct">Acertos</label>
-          <input
-            id="correct"
-            type="number"
-            min="0"
-            value="0"
-          >
-        </div>
-
-      </div>
-
-      <div class="row">
-
-        <div class="field">
-          <label for="difficulty">Dificuldade</label>
-
-          <select id="difficulty">
-            <option value="1">Fácil</option>
-            <option value="2" selected>Média</option>
-            <option value="3">Difícil</option>
-          </select>
-
-        </div>
-
-        <div class="field">
-          <label for="priority">Prioridade</label>
-
-          <select id="priority">
-            <option value="1">Normal</option>
-            <option value="2" selected>Alta</option>
-            <option value="3">Muito alta</option>
-          </select>
-
-        </div>
-
-      </div>
-
-      <button
-        class="primary"
-        onclick="addSubject()"
-      >
-        Salvar assunto
-      </button>
-
-      <div class="small-note">
-        O primeiro intervalo é calculado pelo percentual de acertos,
-        quantidade de questões e dificuldade. Depois, cada revisão
-        recalcula o próximo intervalo.
-      </div>
-
-    </section>
-
-
-    <!-- REVISOES -->
-    <section class="panel">
-
-      <h2>🗓️ Revisões</h2>
-
-      <div id="reviews">
-        <div class="empty">
-          Carregando...
-        </div>
-      </div>
-
-    </section>
-
-  </section>
-
-
-  <!-- TODOS OS ASSUNTOS -->
-  <section
-    class="panel"
-    style="margin-top:18px"
-  >
-
-    <h2>📚 Todos os assuntos</h2>
-
-    <div id="all">
-      <div class="empty">
-        Carregando...
-      </div>
-    </div>
-
-    <button
-      class="danger"
-      onclick="clearAll()"
-    >
-      Apagar todos os dados
-    </button>
-
-  </section>
-
+<section id="dados" class="hidden">
+<section class="panel">
+<h2>💾 Dados</h2>
+<p class="small">Esta versão usa somente as colunas que já faziam parte do HTML original para gravar no Supabase. Os critérios estratégicos novos ficam salvos no navegador para não exigir alteração imediata no banco.</p>
+<button onclick="exportJSON()">⬇️ Exportar JSON</button>
+<button class="secondary" onclick="exportCSV()">⬇️ Exportar CSV</button>
+<button class="danger" onclick="clearAll()">🗑️ Desativar todos os assuntos</button>
+</section>
+</section>
 </main>
 
-
 <script>
+const SUPABASE_URL="https://xtpaojnigdofhlscymff.supabase.co";
+const SUPABASE_KEY="sb_publishable_RVb1L7ZybSDaVpZNGWUEcg_PVubg7sV";
+const {createClient}=supabase;
+const db=createClient(SUPABASE_URL,SUPABASE_KEY);
 
-/* =========================================================
-   SUPABASE
-   ========================================================= */
+const todayISO=()=>new Intl.DateTimeFormat("en-CA",{timeZone:"America/Sao_Paulo"}).format(new Date());
+const META_KEY="inss_ninja_metadata_v1";
 
-const SUPABASE_URL =
-  "https://xtpaojnjgdofhlscymff.supabase.co";
-
-const SUPABASE_KEY =
-  "sb_publishable_RVb1L7ZybSDaVpZNGWUEcg_PVubg7sV";
-
-const { createClient } = supabase;
-
-const db = createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-
-/* =========================================================
-   FUNÇÕES DE DATA
-   ========================================================= */
-
-function todayISO(){
-
-  const d = new Date();
-
-  return new Intl.DateTimeFormat(
-    "en-CA",
-    {
-      timeZone:"America/Sao_Paulo"
-    }
-  ).format(d);
-
+function getMeta(){try{return JSON.parse(localStorage.getItem(META_KEY)||"{}")}catch(e){return {}}}
+function saveMeta(m){localStorage.setItem(META_KEY,JSON.stringify(m))}
+function showMessage(text,type="ok"){const e=document.getElementById("message");e.textContent=text;e.className=type;setTimeout(()=>{e.className="";e.textContent=""},5000)}
+function score(done,correct){return done>0?Math.round(correct/done*100):0}
+function intervalSuggested(s,diff,priority,matterPriority){
+  let days=s<60?1:s<70?3:s<80?5:s<85?7:s<90?14:s<95?21:30;
+  if(d<10)days=Math.min(days,7); else if(d<20)days=Math.min(days,14);
+  if(diff==3)days=Math.max(1,Math.round(days*.75));
+  if(priority==3)days=Math.max(1,Math.round(days*.85));
+  if(matterPriority==1)days=Math.max(1,Math.round(days*.9));
+  return days;
 }
-
-
-function addDays(dateString, days){
-
-  const d = new Date(dateString + "T12:00:00");
-
-  d.setDate(
-    d.getDate() + Number(days)
-  );
-
-  return d.toISOString().slice(0,10);
-
-}
-
-
-function formatDate(dateString){
-
-  if(!dateString){
-    return "";
-  }
-
-  const parts = dateString.split("-");
-
-  if(parts.length !== 3){
-    return dateString;
-  }
-
-  return `${parts[2]}/${parts[1]}/${parts[0]}`;
-
-}
-
-
-/* =========================================================
-   CÁLCULO DO PERCENTUAL
-   ========================================================= */
-
-function calcScore(done, correct){
-
-  if(done <= 0){
-    return 0;
-  }
-
-  return Math.round(
-    (correct / done) * 100
-  );
-
-}
-
-
-/* =========================================================
-   INTERVALO DA PRÓXIMA REVISÃO
-   ========================================================= */
-
-function interval(score, done, difficulty, priority){
-
-  let days;
-
-  /*
-   * Base conforme desempenho
-   */
-
-  if(score < 50){
-
-    days = 1;
-
-  }else if(score < 70){
-
-    days = 3;
-
-  }else if(score < 85){
-
-    days = 7;
-
-  }else{
-
-    days = 14;
-
-  }
-
-
-  /*
-   * Poucas questões = intervalo menor
-   */
-
-  if(done < 10){
-
-    days = Math.max(
-      1,
-      Math.floor(days / 2)
-    );
-
-  }
-
-
-  /*
-   * Dificuldade
-   */
-
-  if(Number(difficulty) === 3){
-
-    days = Math.max(
-      1,
-      Math.floor(days * 0.7)
-    );
-
-  }else if(Number(difficulty) === 1){
-
-    days = Math.ceil(
-      days * 1.2
-    );
-
-  }
-
-
-  /*
-   * Prioridade
-   */
-
-  if(Number(priority) === 3){
-
-    days = Math.max(
-      1,
-      Math.floor(days * 0.7)
-    );
-
-  }else if(Number(priority) === 2){
-
-    days = Math.max(
-      1,
-      Math.floor(days * 0.85)
-    );
-
-  }
-
-
-  return Math.max(1, days);
-
-}
-
-
-/* =========================================================
-   MENSAGENS
-   ========================================================= */
-
-function showMessage(text, type){
-
-  const box =
-    document.getElementById("message");
-
-  box.textContent = text;
-
-  box.className =
-    "message " + type;
-
-}
-
-
-/* =========================================================
-   CADASTRAR ASSUNTO
-   ========================================================= */
-
-async function addSubject(){
-
-  const matter =
-    document
-      .getElementById("matter")
-      .value
-      .trim();
-
-  const subject =
-    document
-      .getElementById("subject")
-      .value
-      .trim();
-
-  const date =
-    document
-      .getElementById("date")
-      .value;
-
-  const available =
-    Number(
-      document
-        .getElementById("available")
-        .value
-    );
-
-  const done =
-    Number(
-      document
-        .getElementById("done")
-        .value
-    );
-
-  const correct =
-    Number(
-      document
-        .getElementById("correct")
-        .value
-    );
-
-  const difficulty =
-    Number(
-      document
-        .getElementById("difficulty")
-        .value
-    );
-
-  const priority =
-    Number(
-      document
-        .getElementById("priority")
-        .value
-    );
-
-
-  /* VALIDAÇÕES */
-
-  if(!matter || !subject || !date){
-
-    showMessage(
-      "Preencha matéria, assunto e data.",
-      "error"
-    );
-
-    return;
-  }
-
-
-  if(
-    done < 0 ||
-    correct < 0 ||
-    available < 0 ||
-    correct > done
-  ){
-
-    showMessage(
-      "Confira as quantidades de questões e acertos.",
-      "error"
-    );
-
-    return;
-  }
-
-
-  /* CÁLCULOS */
-
-  const score =
-    calcScore(
-      done,
-      correct
-    );
-
-  const days =
-    interval(
-      score,
-      done,
-      difficulty,
-      priority
-    );
-
-  const next =
-    addDays(
-      date,
-      days
-    );
-
-
-  /*
-   * IMPORTANTE:
-   *
-   * NÃO enviamos "percentual".
-   *
-   * O Supabase calcula essa coluna
-   * automaticamente porque ela é
-   * uma coluna GENERATED ALWAYS.
-   */
-
-  const payload = {
-
-    materia: matter,
-
-    assunto: subject,
-
-    data_conclusao: date,
-
-    questoes_disponiveis: available,
-
-    questoes_feitas: done,
-
-    acertos: correct,
-
-    dificuldade: difficulty,
-
-    prioridade: priority,
-
-    proxima_revisao: next,
-
-    indice_dominio: score,
-
-    ativo: true,
-
-    questoes_necessarias:
-      Math.max(0, 10 - done),
-
-    nivel_confianca:
-      score >= 85
-        ? "alta"
-        : score >= 70
-          ? "media"
-          : "baixa"
-
-  };
-
-
-  console.log(
-    "Enviando para Supabase:",
-    payload
-  );
-
-
-  const { data, error } =
-    await db
-      .from("assuntos")
-      .insert(payload)
-      .select();
-
-
-  if(error){
-
-    console.error(
-      "Erro Supabase:",
-      error
-    );
-
-    showMessage(
-      "Não foi possível salvar: " +
-      error.message,
-      "error"
-    );
-
-    return;
-  }
-
-
-  console.log(
-    "Salvo:",
-    data
-  );
-
-
-  showMessage(
-    "Assunto salvo! Próxima revisão: " +
-    formatDate(next),
-    "success"
-  );
-
-
-  /* LIMPA FORMULÁRIO */
-
-  document.getElementById("matter").value = "";
-
-  document.getElementById("subject").value = "";
-
-  document.getElementById("available").value = "0";
-
-  document.getElementById("done").value = "10";
-
-  document.getElementById("correct").value = "0";
-
-
-  /* ATUALIZA TELA */
-
-  await render();
-
-}
-
-
-/* =========================================================
-   CARREGAR DADOS
-   ========================================================= */
+function addDays(date,days){const d=new Date(date+"T12:00:00");d.setDate(d.getDate()+days);return d.toISOString().slice(0,10)}
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+function metaFor(id){return getMeta()[String(id)]||{}}
 
 async function loadData(){
-
-  const {
-    data,
-    error
-  } =
-    await db
-      .from("assuntos")
-      .select("*")
-      .eq("ativo", true)
-      .order(
-        "proxima_revisao",
-        {
-          ascending:true
-        }
-      );
-
-
-  if(error){
-
-    console.error(
-      "Erro ao carregar:",
-      error
-    );
-
-    showMessage(
-      "Não foi possível carregar os dados: " +
-      error.message,
-      "error"
-    );
-
-    return [];
-
-  }
-
-
-  return data || [];
-
+  const {data,error}=await db.from("assuntos").select("*").eq("ativo",true).order("proxima_revisao",{ascending:true,nullsFirst:false});
+  if(error){showMessage("Não foi possível consultar o Supabase: "+error.message,"error");return []}
+  return data||[];
 }
 
-
-/* =========================================================
-   STATUS
-   ========================================================= */
-
-function status(next){
-
-  if(!next){
-
-    return {
-      type:"green",
-      text:"SEM DATA"
-    };
-
-  }
-
-  const today =
-    todayISO();
-
-  if(next < today){
-
-    return {
-      type:"red",
-      text:"ATRASADA"
-    };
-
-  }
-
-  if(next === today){
-
-    return {
-      type:"yellow",
-      text:"HOJE"
-    };
-
-  }
-
-  return {
-    type:"green",
-    text:"EM BREVE"
-  };
-
+function previewInterval(){
+  const d=+document.getElementById("done").value||0,c=+document.getElementById("correct").value||0;
+  const s=score(d,c),diff=+document.getElementById("difficulty").value,pri=+document.getElementById("priority").value,mp=+document.getElementById("matterPriority").value;
+  document.getElementById("suggested").value=intervalSuggested(s,diff,pri,mp);
 }
 
+async function addSubject(){
+  const matter=document.getElementById("matter").value.trim(),subject=document.getElementById("subject").value.trim(),lesson=document.getElementById("lesson").value.trim();
+  const lessonPriority=document.getElementById("lessonPriority").value,matterPriority=+document.getElementById("matterPriority").value,priority=+document.getElementById("priority").value;
+  const date=document.getElementById("date").value,available=+document.getElementById("available").value,done=+document.getElementById("done").value,correct=+document.getElementById("correct").value,diff=+document.getElementById("difficulty").value;
+  if(!matter||!subject||!date){alert("Preencha matéria, assunto e data.");return}
+  if(done<0||correct<0||available<0||correct>done){alert("Confira as quantidades de questões e acertos.");return}
+  const s=score(done,correct),suggested=intervalSuggested(s,diff,priority,matterPriority),customRaw=document.getElementById("customInterval").value.trim();
+  const custom=customRaw?Math.max(1,+customRaw):null,next=addDays(date,custom||suggested);
+  const payload={materia:matter,assunto:subject,data_conclusao:date,questoes_disponiveis:available,questoes_feitas:done,acertos:correct,percentual:s,indice_dominio:s,ativo:true,questoes_necessarias:Math.max(0,10-done)};
+  const {data,error}=await db.from("assuntos").insert(payload).select("id").single();
+  if(error){showMessage("Não foi possível salvar: "+error.message,"error");return}
+  const m=getMeta();m[String(data.id)]={apostila:lesson,apostilaPeso:lessonPriority,materiaPrioridade:matterPriority,prioridadeAssunto:priority,dificuldade:diff,intervaloSugerido:suggested,intervaloPersonalizado:custom,proximaPersonalizada:next};saveMeta(m);
+  ["matter","subject","lesson"].forEach(id=>document.getElementById(id).value="");document.getElementById("available").value="0";document.getElementById("done").value="0";document.getElementById("correct").value="0";document.getElementById("customInterval").value="";
+  showMessage("Assunto salvo. Próxima revisão: "+next+(custom?" (intervalo personalizado)":" (sugestão do sistema)"));showTab("painel");render();
+}
 
-/* =========================================================
-   REGISTRAR REVISÃO
-   ========================================================= */
+function rank(x){
+  const m=metaFor(x.id),due=x.proxima_revisao&&x.proxima_revisao<=todayISO();
+  return (x.percentual<70?1000:0)+(m.materiaPrioridade?((5-m.materiaPrioridade)*120):0)+(m.prioridadeAssunto||1)*100+(due?300:0)-(x.percentual||0);
+}
+
+function status(next){const t=todayISO();if(!next)return["green","SEM DATA"];if(next<t)return["red","ATRASADA"];if(next===t)return["orange","HOJE"];const d=Math.round((new Date(next+"T12:00:00")-new Date(t+"T12:00:00"))/86400000);return d<=7?["yellow","EM BREVE"]:["green","FUTURA"]}
+
+function showTab(id){
+  ["painel","cadastro","estrategia","dados"].forEach(x=>document.getElementById(x).classList.toggle("hidden",x!==id));
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+  const b=document.querySelector('.tab[data-tab="'+id+'"]');if(b)b.classList.add("active");
+}
 
 async function review(id){
-
-  const current =
-    (await loadData())
-      .find(
-        item => item.id === id
-      );
-
-  if(!current){
-    return;
-  }
-
-
-  const done =
-    Number(
-      prompt(
-        "Quantas questões você fez nesta revisão?",
-        "10"
-      )
-    );
-
-
-  if(!Number.isFinite(done) || done < 0){
-
-    alert(
-      "Quantidade inválida."
-    );
-
-    return;
-  }
-
-
-  const correct =
-    Number(
-      prompt(
-        "Quantas você acertou?",
-        "0"
-      )
-    );
-
-
-  if(
-    !Number.isFinite(correct) ||
-    correct < 0 ||
-    correct > done
-  ){
-
-    alert(
-      "Quantidade de acertos inválida."
-    );
-
-    return;
-  }
-
-
-  const score =
-    calcScore(
-      done,
-      correct
-    );
-
-
-  const days =
-    interval(
-      score,
-      done,
-      current.dificuldade,
-      current.prioridade
-    );
-
-
-  const next =
-    addDays(
-      todayISO(),
-      days
-    );
-
-
-  const confidence =
-    score >= 85
-      ? "alta"
-      : score >= 70
-        ? "media"
-        : "baixa";
-
-
-  const {
-    error
-  } =
-    await db
-      .from("assuntos")
-      .update({
-
-        questoes_feitas:done,
-
-        acertos:correct,
-
-        proxima_revisao:next,
-
-        indice_dominio:score,
-
-        nivel_confianca:confidence,
-
-        questoes_necessarias:
-          Math.max(0, 10 - done)
-
-      })
-      .eq("id", id);
-
-
-  if(error){
-
-    showMessage(
-      "Erro ao registrar revisão: " +
-      error.message,
-      "error"
-    );
-
-    return;
-  }
-
-
-  showMessage(
-    "Revisão registrada! Próxima revisão: " +
-    formatDate(next),
-    "success"
-  );
-
-
-  render();
-
+  const current=(await loadData()).find(a=>a.id===id);if(!current)return;
+  const d=prompt("Quantas questões você fez nesta revisão?",String(current.questoes_feitas??0));if(d===null)return;
+  const c=prompt("Quantas acertou?",String(current.acertos??0));if(c===null)return;
+  const done=+d,correct=+c;if(!Number.isFinite(done)||!Number.isFinite(correct)||done<0||correct<0||correct>done){alert("Valores inválidos.");return}
+  const m=metaFor(id),s=score(done,correct),suggested=intervalSuggested(s,m.dificuldade||2,m.prioridadeAssunto||2,m.materiaPrioridade||1),custom=m.intervaloPersonalizado||null,next=addDays(todayISO(),custom||suggested);
+  const {error}=await db.from("assuntos").update({questoes_feitas:done,acertos:correct,percentual:s,indice_dominio:s,questoes_necessarias:Math.max(0,10-done),proxima_revisao:next}).eq("id",id);
+  if(error){showMessage("Erro ao registrar revisão: "+error.message,"error");return}
+  const mm=getMeta();mm[String(id)]={...m,intervaloSugerido:suggested,proximaPersonalizada:next};saveMeta(mm);
+  showMessage("Revisão registrada. "+(custom?"Seu intervalo personalizado foi mantido. ":"")+"Próxima: "+next);render();
 }
 
-
-/* =========================================================
-   EXCLUIR ITEM
-   ========================================================= */
-
-async function removeItem(id){
-
-  if(
-    !confirm(
-      "Excluir este assunto?"
-    )
-  ){
-
-    return;
-  }
-
-
-  const {
-    error
-  } =
-    await db
-      .from("assuntos")
-      .update({
-        ativo:false
-      })
-      .eq("id", id);
-
-
-  if(error){
-
-    showMessage(
-      "Erro ao excluir: " +
-      error.message,
-      "error"
-    );
-
-    return;
-  }
-
-
-  showMessage(
-    "Assunto excluído.",
-    "success"
-  );
-
-
-  render();
-
-}
-
-
-/* =========================================================
-   APAGAR TODOS
-   ========================================================= */
-
-async function clearAll(){
-
-  if(
-    !confirm(
-      "Apagar todos os assuntos?"
-    )
-  ){
-
-    return;
-  }
-
-
-  const {
-    error
-  } =
-    await db
-      .from("assuntos")
-      .update({
-        ativo:false
-      })
-      .eq("ativo", true);
-
-
-  if(error){
-
-    showMessage(
-      "Erro ao apagar dados: " +
-      error.message,
-      "error"
-    );
-
-    return;
-  }
-
-
-  showMessage(
-    "Todos os assuntos foram apagados.",
-    "success"
-  );
-
-
-  render();
-
-}
-
-
-/* =========================================================
-   RENDERIZAÇÃO
-   ========================================================= */
+async function removeItem(id){if(!confirm("Excluir este assunto?"))return;const {error}=await db.from("assuntos").update({ativo:false}).eq("id",id);if(error){showMessage("Erro ao excluir: "+error.message,"error");return}render()}
+async function clearAll(){if(!confirm("Desativar todos os assuntos?"))return;const {error}=await db.from("assuntos").update({ativo:false}).eq("ativo",true);if(error){showMessage("Erro ao apagar: "+error.message,"error");return}render()}
 
 async function render(){
-
-  const data =
-    await loadData();
-
-
-  const today =
-    todayISO();
-
-
-  /* -------------------------
-     INDICADORES
-  ------------------------- */
-
-  const overdue =
-    data.filter(
-      item =>
-        item.proxima_revisao &&
-        item.proxima_revisao < today
-    ).length;
-
-
-  const todayCount =
-    data.filter(
-      item =>
-        item.proxima_revisao === today
-    ).length;
-
-
-  const limit =
-    addDays(
-      today,
-      7
-    );
-
-
-  const next7 =
-    data.filter(
-      item =>
-        item.proxima_revisao &&
-        item.proxima_revisao >= today &&
-        item.proxima_revisao <= limit
-    ).length;
-
-
-  const scores =
-    data
-      .map(
-        item =>
-          Number(item.indice_dominio)
-      )
-      .filter(
-        value =>
-          Number.isFinite(value)
-      );
-
-
-  let average = "—";
-
-
-  if(scores.length){
-
-    const avg =
-      scores.reduce(
-        (a,b) => a+b,
-        0
-      ) / scores.length;
-
-    average =
-      Math.round(avg) + "%";
-
-  }
-
-
-  document.getElementById(
-    "overdue"
-  ).textContent = overdue;
-
-
-  document.getElementById(
-    "today"
-  ).textContent = todayCount;
-
-
-  document.getElementById(
-    "next7"
-  ).textContent = next7;
-
-
-  document.getElementById(
-    "average"
-  ).textContent = average;
-
-
-  /* -------------------------
-     REVISÕES
-  ------------------------- */
-
-  const reviews =
-    document.getElementById(
-      "reviews"
-    );
-
-
-  const upcoming =
-    data.filter(
-      item =>
-        item.proxima_revisao &&
-        item.proxima_revisao <= limit
-    );
-
-
-  if(!upcoming.length){
-
-    reviews.innerHTML =
-      '<div class="empty">Nenhuma revisão nos próximos 7 dias. 🎉</div>';
-
-  }else{
-
-    reviews.innerHTML =
-      upcoming
-        .map(item => {
-
-          const s =
-            status(
-              item.proxima_revisao
-            );
-
-
-          return `
-
-            <div class="review">
-
-              <div class="review-title">
-
-                ${escapeHtml(item.materia)}
-                —
-                ${escapeHtml(item.assunto)}
-
-                <span class="badge ${s.type}">
-                  ${s.text}
-                </span>
-
-              </div>
-
-              <div class="review-info">
-
-                Revisão:
-                ${formatDate(item.proxima_revisao)}
-
-                •
-                ${Number(item.indice_dominio || 0)}%
-
-                •
-                ${item.questoes_feitas || 0}
-                questões
-
-              </div>
-
-              <button
-                onclick="review(${item.id})"
-              >
-                Registrar revisão
-              </button>
-
-            </div>
-
-          `;
-
-        })
-        .join("");
-
-  }
-
-
-  /* -------------------------
-     TODOS OS ASSUNTOS
-  ------------------------- */
-
-  const all =
-    document.getElementById(
-      "all"
-    );
-
-
-  if(!data.length){
-
-    all.innerHTML =
-      '<div class="empty">Cadastre seu primeiro assunto acima.</div>';
-
-    return;
-
-  }
-
-
-  all.innerHTML =
-    data
-      .map(item => {
-
-        return `
-
-          <div class="subject">
-
-            <div class="subject-title">
-
-              ${escapeHtml(item.materia)}
-              —
-              ${escapeHtml(item.assunto)}
-
-            </div>
-
-            <div class="subject-info">
-
-              ${Number(item.indice_dominio || 0)}%
-              •
-              ${item.questoes_feitas || 0}
-              questões
-              •
-              próxima:
-              ${formatDate(item.proxima_revisao)}
-
-            </div>
-
-            <button
-              style="
-                background:#fee2e2;
-                color:#b91c1c;
-                margin-top:8px;
-              "
-              onclick="removeItem(${item.id})"
-            >
-              Excluir
-            </button>
-
-          </div>
-
-        `;
-
-      })
-      .join("");
-
+  const data=await loadData(),t=todayISO(),week=addDays(t,7);
+  let overdue=0,today=0,w=0,sum=0,critical=0;
+  data.forEach(x=>{if(x.proxima_revisao<t)overdue++;else if(x.proxima_revisao===t)today++;else if(x.proxima_revisao&&x.proxima_revisao<=week)w++;sum+=Number(x.percentual||0);if(Number(x.percentual||0)<70)critical++});
+  document.getElementById("overdue").textContent=overdue;document.getElementById("today").textContent=today;document.getElementById("week").textContent=w;document.getElementById("avg").textContent=data.length?Math.round(sum/data.length)+"%":"—";document.getElementById("critical").textContent=critical;
+  const sorted=[...data].sort((a,b)=>rank(b)-rank(a));
+  document.getElementById("priorityList").innerHTML=sorted.slice(0,10).map(x=>{
+    const m=metaFor(x.id),s=x.percentual??0,peso=m.apostilaPeso||"green",pesoTxt={red:"60–65% — máxima",orange:"20–25% — alta",yellow:"10–15% — média",green:"Restante — manutenção"}[peso]||"—";
+    return `<div class="item"><div style="flex:1"><div class="subject">${esc(x.materia)} — ${esc(x.assunto)}</div><div class="meta">${s}% · ${x.questoes_feitas??0} questões · ${esc(m.apostila||"Apostila não definida")}</div><div class="meta">${pesoTxt} · próxima: ${x.proxima_revisao||"—"}</div></div><span class="badge ${s<70?"red":s<85?"yellow":"green"}">${s<70?"🔴 CRÍTICO":s<85?"🟡 ATENÇÃO":"🟢 CONSOLIDADO"}</span></div>`
+  }).join("")||'<div class="empty">Nenhum assunto cadastrado.</div>';
+
+  const due=data.filter(x=>x.proxima_revisao&&x.proxima_revisao<=week).sort((a,b)=>(a.proxima_revisao||"9999").localeCompare(b.proxima_revisao||"9999"));
+  document.getElementById("reviewList").innerHTML=due.map(x=>{
+    const [cl,txt]=status(x.proxima_revisao),m=metaFor(x.id),s=x.percentual??0;
+    return `<div class="item"><div><div class="subject">${esc(x.materia)} — ${esc(x.assunto)}</div><div class="meta">${x.proxima_revisao===t?"Revisar hoje":x.proxima_revisao<t?"Atrasada":"Revisão: "+x.proxima_revisao} · ${s}%</div><div class="meta">🤖 Sugestão: ${m.intervaloSugerido||"—"} dias ${m.intervaloPersonalizado?`· ✏️ Você escolheu: ${m.intervaloPersonalizado} dias`:""}</div></div><div><span class="badge ${cl}">${txt}</span><button class="secondary" onclick="review(${x.id})">Registrar</button></div></div>`
+  }).join("")||'<div class="empty">Nenhuma revisão nos próximos 7 dias. 🎉</div>';
+
+  const crit=sorted.filter(x=>(x.percentual||0)<70).slice(0,6);
+  document.getElementById("weekStrategy").innerHTML=crit.length?crit.map(x=>{const m=metaFor(x.id);return `<div class="item crit"><div><div class="subject">🔴 ${esc(x.materia)} — ${esc(x.assunto)}</div><div class="meta">Aproveitamento: ${x.percentual??0}% · ${esc(m.apostila||"Apostila não definida")}</div><div class="meta">Ação: revisão ativa + questões. Não precisa esgotar todos os assuntos nesta semana.</div></div><span class="badge red">FOCO</span></div>`}).join(""):'<div class="empty">Nenhum assunto abaixo de 70%. Excelente: a semana pode privilegiar manutenção e novas questões.</div>';
 }
 
-
-/* =========================================================
-   SEGURANÇA PARA TEXTO
-   ========================================================= */
-
-function escapeHtml(value){
-
-  return String(value ?? "")
-    .replace(
-      /[&<>"']/g,
-      function(match){
-
-        const chars = {
-
-          "&":"&amp;",
-          "<":"&lt;",
-          ">":"&gt;",
-          '"':"&quot;",
-          "'":"&#039;"
-
-        };
-
-        return chars[match];
-
-      }
-    );
-
-}
-
-
-/* =========================================================
-   INICIALIZAÇÃO
-   ========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  function(){
-
-    document.getElementById(
-      "date"
-    ).value = todayISO();
-
-    render();
-
-  }
-);
-
+async function exportJSON(){download("revisao-inss-ninja.json",JSON.stringify(await loadData(),null,2),"application/json")}
+async function exportCSV(){const data=await loadData(),fields=["id","materia","assunto","data_conclusao","questoes_disponiveis","questoes_feitas","acertos","percentual","proxima_revisao"];const csv=[fields.join(";"),...data.map(x=>fields.map(f=>String(x[f]??"").replaceAll(";"," ")).join(";"))].join("\n");download("revisao-inss-ninja.csv",csv,"text/csv;charset=utf-8")}
+function download(name,data,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+document.getElementById("date").value=todayISO();
+document.querySelectorAll("#done,#correct,#difficulty,#priority,#matterPriority").forEach(e=>e.addEventListener("input",previewInterval));
+previewInterval();render();
 </script>
-
 </body>
 </html>
