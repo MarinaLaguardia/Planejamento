@@ -18,8 +18,8 @@
 
     --sub: #7c3131;      /* Memórias do Subsolo — vinho, introspecção */
     --sub-soft: #f1dfda;
-    --deus: #2e4a57;     /* O Deus Suficiente — azul profundo */
-    --deus-soft: #dde7e7;
+    --criados: #2e4a57;  /* Criados à Imagem de Deus — azul profundo */
+    --criados-soft: #dde7e7;
     --ursa: #a85f1d;     /* Apologética da Mamãe Ursa — âmbar/urso */
     --ursa-soft: #f2e2cd;
 
@@ -39,8 +39,8 @@
 
       --sub: #d98c8c;
       --sub-soft: #3a2422;
-      --deus: #8fb3c0;
-      --deus-soft: #212f34;
+      --criados: #8fb3c0;
+      --criados-soft: #212f34;
       --ursa: #dba360;
       --ursa-soft: #372a19;
 
@@ -59,8 +59,8 @@
 
     --sub: #d98c8c;
     --sub-soft: #3a2422;
-    --deus: #8fb3c0;
-    --deus-soft: #212f34;
+    --criados: #8fb3c0;
+    --criados-soft: #212f34;
     --ursa: #dba360;
     --ursa-soft: #372a19;
 
@@ -104,7 +104,7 @@
     box-shadow: var(--shadow); border-left: 4px solid var(--sub);
     display:flex; flex-direction:column; gap:10px;
   }
-  .book.deus{ border-left-color: var(--deus); }
+  .book.criados{ border-left-color: var(--criados); }
   .book.ursa{ border-left-color: var(--ursa); }
 
   .book h3{
@@ -114,7 +114,7 @@
   .book .meta{ font-size:0.78rem; color: var(--ink-soft); }
   .track{ background: var(--rule-soft); border-radius: 999px; height:7px; overflow:hidden; }
   .fill{ height:100%; border-radius:999px; background: var(--sub); width:0%; transition: width .35s ease; }
-  .book.deus .fill{ background: var(--deus); }
+  .book.criados .fill{ background: var(--criados); }
   .book.ursa .fill{ background: var(--ursa); }
   .progress-text{ font-family:'Spline Sans Mono', monospace; font-size:0.72rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 
@@ -125,7 +125,7 @@
   .legend span{ display:inline-flex; align-items:center; gap:6px; }
   .swatch{ width:9px; height:9px; border-radius:2px; display:inline-block; }
   .swatch.sub{ background: var(--sub); }
-  .swatch.deus{ background: var(--deus); }
+  .swatch.criados{ background: var(--criados); }
   .swatch.ursa{ background: var(--ursa); }
 
   .table-scroll{ overflow-x:auto; border-radius: 12px; box-shadow: var(--shadow); }
@@ -146,13 +146,13 @@
     font-family: 'Spline Sans Mono', monospace; font-variant-numeric: tabular-nums;
   }
   .pill.sub{ background: var(--sub-soft); color: var(--sub); }
-  .pill.deus{ background: var(--deus-soft); color: var(--deus); }
+  .pill.criados{ background: var(--criados-soft); color: var(--criados); }
   .pill.ursa{ background: var(--ursa-soft); color: var(--ursa); }
   .pill.done{ background: var(--done-soft); color: var(--done); }
 
   .chk-cell{ text-align:center; width: 36px; }
   input[type="checkbox"]{ width:17px; height:17px; accent-color: var(--sub); cursor:pointer; }
-  input[type="checkbox"].deus-check{ accent-color: var(--deus); }
+  input[type="checkbox"].criados-check{ accent-color: var(--criados); }
   input[type="checkbox"].ursa-check{ accent-color: var(--ursa); }
   input[type="checkbox"]:focus-visible{ outline: 2px solid var(--ink); outline-offset: 2px; }
 
@@ -171,12 +171,12 @@
 <body>
 <div class="wrap">
   <header>
-    <p class="kicker">Cronograma atualizado · 22 ago – 12 set 2026</p>
+    <p class="kicker">Cronograma atualizado · 11 set – 02 out 2026</p>
     <h1>Diário de Leitura</h1>
-    <p class="sub">Três livros em paralelo, um pouco de cada todos os dias — Memórias do Subsolo entra no lugar de Dom Casmurro, começando do zero, enquanto O Deus Suficiente e Apologética da Mamãe Ursa seguem de onde você parou.</p>
+    <p class="sub">Três livros em paralelo, um pouco de cada todos os dias — Memórias do Subsolo e Criados à Imagem de Deus começam do zero amanhã, enquanto Apologética da Mamãe Ursa segue de onde você parou.</p>
     <div class="legend">
       <span><span class="swatch sub"></span>Memórias do Subsolo</span>
-      <span><span class="swatch deus"></span>O Deus Suficiente</span>
+      <span><span class="swatch criados"></span>Criados à Imagem de Deus</span>
       <span><span class="swatch ursa"></span>Apologética da Mamãe Ursa</span>
     </div>
   </header>
@@ -188,11 +188,11 @@
       <div class="track"><div class="fill" id="fill-sub"></div></div>
       <div class="progress-text" id="text-sub">0/22 dias marcados</div>
     </div>
-    <div class="book deus">
-      <h3>O Deus Suficiente</h3>
-      <div class="meta">Lloyd-Jones · 174 pág. · você está na pág. 7</div>
-      <div class="track"><div class="fill" id="fill-deus"></div></div>
-      <div class="progress-text" id="text-deus">0/17 dias marcados</div>
+    <div class="book criados">
+      <h3>Criados à Imagem de Deus</h3>
+      <div class="meta">415 pág. · começando na pág. 1</div>
+      <div class="track"><div class="fill" id="fill-criados"></div></div>
+      <div class="progress-text" id="text-criados">0/22 dias marcados</div>
     </div>
     <div class="book ursa">
       <h3>Apologética da Mamãe Ursa</h3>
@@ -209,7 +209,7 @@
           <th>Dia</th>
           <th>Mem. do Subsolo</th>
           <th class="chk-cell"></th>
-          <th>O Deus Suficiente</th>
+          <th>Criados à Imagem</th>
           <th class="chk-cell"></th>
           <th>Apolog. Mamãe Ursa</th>
           <th class="chk-cell"></th>
@@ -220,8 +220,8 @@
   </div>
 
   <p class="note">
-    Ritmo: ~14 pág./dia de Memórias do Subsolo, ~10 pág./dia de O Deus Suficiente e ~12 pág./dia de Apologética da Mamãe Ursa.
-    O Deus Suficiente termina por volta de 7 de set., e Memórias do Subsolo fecha o ciclo junto com Apologética da Mamãe Ursa em 12 de set.
+    Ritmo: ~14 pág./dia de Memórias do Subsolo, ~19 pág./dia de Criados à Imagem de Deus e ~12 pág./dia de Apologética da Mamãe Ursa.
+    Os três livros fecham juntos, por volta de 2 de outubro.
     Os checkboxes ficam salvos neste navegador — se você abrir esta página em outro aparelho ou limpar os dados do site, o progresso marcado não aparece lá.
   </p>
 </div>
@@ -229,7 +229,7 @@
 <script>
   const weekdays = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
   const months = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
-  const STORAGE_KEY = 'diario-leitura-checks-v3';
+  const STORAGE_KEY = 'diario-leitura-checks-v4';
 
   function buildRanges(startPage, endPage, dailyRate, totalDays){
     const ranges = [];
@@ -246,19 +246,19 @@
     return ranges;
   }
 
-  const startDate = new Date(2026, 7, 22); // 22 ago 2026
-  const SUB_RATE = 14, DEUS_RATE = 10, URSA_RATE = 12;
+  const startDate = new Date(2026, 8, 11); // 11 set 2026
+  const SUB_RATE = 14, CRIADOS_RATE = 19, URSA_RATE = 12;
   const SUB_START = 1, SUB_END = 306;
-  const DEUS_START = 8, DEUS_END = 174;
+  const CRIADOS_START = 1, CRIADOS_END = 415;
   const URSA_START = 60, URSA_END = 317;
 
   const subDaysNeeded = Math.ceil((SUB_END - SUB_START + 1) / SUB_RATE);
-  const deusDaysNeeded = Math.ceil((DEUS_END - DEUS_START + 1) / DEUS_RATE);
+  const criadosDaysNeeded = Math.ceil((CRIADOS_END - CRIADOS_START + 1) / CRIADOS_RATE);
   const ursaDaysNeeded = Math.ceil((URSA_END - URSA_START + 1) / URSA_RATE);
-  const totalDays = Math.max(subDaysNeeded, deusDaysNeeded, ursaDaysNeeded);
+  const totalDays = Math.max(subDaysNeeded, criadosDaysNeeded, ursaDaysNeeded);
 
   const subRanges = buildRanges(SUB_START, SUB_END, SUB_RATE, totalDays);
-  const deusRanges = buildRanges(DEUS_START, DEUS_END, DEUS_RATE, totalDays);
+  const criadosRanges = buildRanges(CRIADOS_START, CRIADOS_END, CRIADOS_RATE, totalDays);
   const ursaRanges = buildRanges(URSA_START, URSA_END, URSA_RATE, totalDays);
 
   const tbody = document.getElementById('schedule-body');
@@ -285,7 +285,7 @@
     if(d.toDateString() === todayStr) tr.classList.add('today');
 
     const subRange = subRanges[i];
-    const deusRange = deusRanges[i];
+    const criadosRange = criadosRanges[i];
     const ursaRange = ursaRanges[i];
 
     const subCellHtml = subRange
@@ -294,11 +294,11 @@
     const subChkHtml = subRange
       ? `<input type="checkbox" class="sub-check" data-book="sub" data-day="${i}">` : ``;
 
-    const deusCellHtml = deusRange
-      ? `<span class="pill deus">pág. ${deusRange[0]}–${deusRange[1]}</span>${deusRange[1]===DEUS_END ? '<div class="milestone">último trecho</div>' : ''}`
+    const criadosCellHtml = criadosRange
+      ? `<span class="pill criados">pág. ${criadosRange[0]}–${criadosRange[1]}</span>${criadosRange[1]===CRIADOS_END ? '<div class="milestone">último trecho</div>' : ''}`
       : `<span class="pill done">concluído</span>`;
-    const deusChkHtml = deusRange
-      ? `<input type="checkbox" class="deus-check" data-book="deus" data-day="${i}">` : ``;
+    const criadosChkHtml = criadosRange
+      ? `<input type="checkbox" class="criados-check" data-book="criados" data-day="${i}">` : ``;
 
     const ursaCellHtml = ursaRange
       ? `<span class="pill ursa">pág. ${ursaRange[0]}–${ursaRange[1]}</span>${ursaRange[1]===URSA_END ? '<div class="milestone">último trecho</div>' : ''}`
@@ -310,8 +310,8 @@
       <td class="date-cell"><span class="wk">${wk}</span><span class="dt">${dateLabel}</span></td>
       <td>${subCellHtml}</td>
       <td class="chk-cell">${subChkHtml}</td>
-      <td>${deusCellHtml}</td>
-      <td class="chk-cell">${deusChkHtml}</td>
+      <td>${criadosCellHtml}</td>
+      <td class="chk-cell">${criadosChkHtml}</td>
       <td>${ursaCellHtml}</td>
       <td class="chk-cell">${ursaChkHtml}</td>
     `;
@@ -327,7 +327,7 @@
   function updateProgress(){
     const groups = [
       {book:'sub', needed: subDaysNeeded, fill: 'fill-sub', text: 'text-sub'},
-      {book:'deus', needed: deusDaysNeeded, fill: 'fill-deus', text: 'text-deus'},
+      {book:'criados', needed: criadosDaysNeeded, fill: 'fill-criados', text: 'text-criados'},
       {book:'ursa', needed: ursaDaysNeeded, fill: 'fill-ursa', text: 'text-ursa'},
     ];
     groups.forEach(g=>{
