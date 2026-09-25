@@ -16,8 +16,8 @@
     --rule: #d8caa9;
     --rule-soft: #e3d7ba;
 
-    --sub: #7c3131;      /* Memórias do Subsolo — vinho, introspecção */
-    --sub-soft: #f1dfda;
+    --jog: #5b4a7a;      /* O Jogador — roxo profundo, roleta/febre */
+    --jog-soft: #e6e0ef;
     --criados: #2e4a57;  /* Criados à Imagem de Deus — azul profundo */
     --criados-soft: #dde7e7;
     --ursa: #a85f1d;     /* Apologética da Mamãe Ursa — âmbar/urso */
@@ -37,8 +37,8 @@
       --rule: #453d30;
       --rule-soft: #3a3327;
 
-      --sub: #d98c8c;
-      --sub-soft: #3a2422;
+      --jog: #b3a2d6;
+      --jog-soft: #2c2636;
       --criados: #8fb3c0;
       --criados-soft: #212f34;
       --ursa: #dba360;
@@ -57,8 +57,8 @@
     --rule: #453d30;
     --rule-soft: #3a3327;
 
-    --sub: #d98c8c;
-    --sub-soft: #3a2422;
+    --jog: #b3a2d6;
+    --jog-soft: #2c2636;
     --criados: #8fb3c0;
     --criados-soft: #212f34;
     --ursa: #dba360;
@@ -76,7 +76,7 @@
     background: var(--paper);
     color: var(--ink);
     font-family: 'Karla', -apple-system, Helvetica, Arial, sans-serif;
-    padding: 40px 20px 72px;
+    padding: 40px 16px 72px;
   }
   .wrap{ max-width: 900px; margin: 0 auto; }
 
@@ -93,6 +93,12 @@
   }
   header p.sub{ margin:0; color: var(--ink-soft); font-size: 0.95rem; max-width: 60ch; }
 
+  .finished{
+    margin: 14px 0 0; font-size: 0.82rem; color: var(--done);
+    display:inline-flex; align-items:center; gap:8px;
+    background: var(--done-soft); padding: 5px 10px; border-radius: 6px;
+  }
+
   .shelf{
     display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
     margin: 26px 0 34px;
@@ -101,7 +107,7 @@
 
   .book{
     background: var(--paper-raised); border-radius: 10px; padding: 16px 18px 18px;
-    box-shadow: var(--shadow); border-left: 4px solid var(--sub);
+    box-shadow: var(--shadow); border-left: 4px solid var(--jog);
     display:flex; flex-direction:column; gap:10px;
   }
   .book.criados{ border-left-color: var(--criados); }
@@ -111,20 +117,28 @@
     font-family:'Fraunces', Georgia, serif; font-weight:600; font-size:1.02rem; margin:0;
     letter-spacing: -0.005em;
   }
-  .book .meta{ font-size:0.78rem; color: var(--ink-soft); }
+  .book .meta{ font-size:0.78rem; color: var(--ink-soft); line-height: 1.5; }
+  .book .meta strong{ color: var(--ink); font-weight: 600; }
+  .start-row{ display:flex; align-items:center; gap:8px; font-size:0.78rem; color: var(--ink-soft); }
+  .start-row input{
+    width: 64px; padding: 3px 6px; border-radius: 6px;
+    border: 1px solid var(--rule); background: var(--paper); color: var(--ink);
+    font-family: 'Spline Sans Mono', monospace; font-size: 0.8rem;
+  }
+  .start-row input:focus-visible{ outline: 2px solid var(--ink); outline-offset: 1px; }
   .track{ background: var(--rule-soft); border-radius: 999px; height:7px; overflow:hidden; }
-  .fill{ height:100%; border-radius:999px; background: var(--sub); width:0%; transition: width .35s ease; }
+  .fill{ height:100%; border-radius:999px; background: var(--jog); width:0%; transition: width .35s ease; }
   .book.criados .fill{ background: var(--criados); }
   .book.ursa .fill{ background: var(--ursa); }
   .progress-text{ font-family:'Spline Sans Mono', monospace; font-size:0.72rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 
   .legend{
-    display:flex; gap:18px; flex-wrap:wrap; margin: 4px 0 0;
+    display:flex; gap:18px; flex-wrap:wrap; margin: 10px 0 0;
     font-size: 0.82rem; color: var(--ink-soft);
   }
   .legend span{ display:inline-flex; align-items:center; gap:6px; }
   .swatch{ width:9px; height:9px; border-radius:2px; display:inline-block; }
-  .swatch.sub{ background: var(--sub); }
+  .swatch.jog{ background: var(--jog); }
   .swatch.criados{ background: var(--criados); }
   .swatch.ursa{ background: var(--ursa); }
 
@@ -138,6 +152,7 @@
   tbody td{ padding: 10px 14px; border-bottom: 1px solid var(--rule-soft); font-size: 0.86rem; vertical-align: middle; }
   tbody tr:last-child td{ border-bottom:none; }
   tbody tr.today{ background: var(--ursa-soft); }
+  tbody tr.weekend td.date-cell .wk{ color: var(--ursa); font-weight: 600; }
   .date-cell .wk{ display:block; color: var(--ink-soft); font-size: 0.72rem; }
   .date-cell .dt{ font-weight: 600; font-variant-numeric: tabular-nums; }
 
@@ -145,13 +160,14 @@
     display:inline-block; padding: 3px 9px; border-radius: 6px; font-size: 0.8rem; font-weight: 600;
     font-family: 'Spline Sans Mono', monospace; font-variant-numeric: tabular-nums;
   }
-  .pill.sub{ background: var(--sub-soft); color: var(--sub); }
+  .pill.jog{ background: var(--jog-soft); color: var(--jog); }
   .pill.criados{ background: var(--criados-soft); color: var(--criados); }
   .pill.ursa{ background: var(--ursa-soft); color: var(--ursa); }
   .pill.done{ background: var(--done-soft); color: var(--done); }
+  .off{ color: var(--ink-soft); font-size: 0.78rem; opacity: 0.75; }
 
   .chk-cell{ text-align:center; width: 36px; }
-  input[type="checkbox"]{ width:17px; height:17px; accent-color: var(--sub); cursor:pointer; }
+  input[type="checkbox"]{ width:17px; height:17px; accent-color: var(--jog); cursor:pointer; }
   input[type="checkbox"].criados-check{ accent-color: var(--criados); }
   input[type="checkbox"].ursa-check{ accent-color: var(--ursa); }
   input[type="checkbox"]:focus-visible{ outline: 2px solid var(--ink); outline-offset: 2px; }
@@ -171,34 +187,38 @@
 <body>
 <div class="wrap">
   <header>
-    <p class="kicker">Cronograma atualizado · 11 set – 02 out 2026</p>
+    <p class="kicker" id="kicker">Cronograma atualizado</p>
     <h1>Diário de Leitura</h1>
-    <p class="sub">Três livros em paralelo, um pouco de cada todos os dias — Memórias do Subsolo e Criados à Imagem de Deus começam do zero amanhã, enquanto Apologética da Mamãe Ursa segue de onde você parou.</p>
+    <p class="sub">Novo ritmo a partir de hoje: Criados à Imagem de Deus em doses curtas todo dia, Apologética da Mamãe Ursa só nos fins de semana, e O Jogador entrando na segunda-feira.</p>
+    <div class="finished">✓ Memórias do Subsolo — concluído em setembro de 2026</div>
     <div class="legend">
-      <span><span class="swatch sub"></span>Memórias do Subsolo</span>
+      <span><span class="swatch jog"></span>O Jogador</span>
       <span><span class="swatch criados"></span>Criados à Imagem de Deus</span>
       <span><span class="swatch ursa"></span>Apologética da Mamãe Ursa</span>
     </div>
   </header>
 
   <div class="shelf">
-    <div class="book sub">
-      <h3>Memórias do Subsolo</h3>
-      <div class="meta">Dostoiévski · 306 pág. · começando na pág. 1</div>
-      <div class="track"><div class="fill" id="fill-sub"></div></div>
-      <div class="progress-text" id="text-sub">0/22 dias marcados</div>
+    <div class="book jog">
+      <h3>O Jogador</h3>
+      <div class="meta" id="meta-jogador"></div>
+      <label class="start-row">Começando na pág. <input type="number" min="1" id="start-jogador" data-book="jogador"></label>
+      <div class="track"><div class="fill" id="fill-jogador"></div></div>
+      <div class="progress-text" id="text-jogador"></div>
     </div>
     <div class="book criados">
       <h3>Criados à Imagem de Deus</h3>
-      <div class="meta">415 pág. · começando na pág. 1</div>
+      <div class="meta" id="meta-criados"></div>
+      <label class="start-row">Estou na pág. <input type="number" min="1" id="start-criados" data-book="criados"></label>
       <div class="track"><div class="fill" id="fill-criados"></div></div>
-      <div class="progress-text" id="text-criados">0/22 dias marcados</div>
+      <div class="progress-text" id="text-criados"></div>
     </div>
     <div class="book ursa">
       <h3>Apologética da Mamãe Ursa</h3>
-      <div class="meta">317 pág. · você está na pág. 59</div>
+      <div class="meta" id="meta-ursa"></div>
+      <label class="start-row">Estou na pág. <input type="number" min="1" id="start-ursa" data-book="ursa"></label>
       <div class="track"><div class="fill" id="fill-ursa"></div></div>
-      <div class="progress-text" id="text-ursa">0/22 dias marcados</div>
+      <div class="progress-text" id="text-ursa"></div>
     </div>
   </div>
 
@@ -207,7 +227,7 @@
       <thead>
         <tr>
           <th>Dia</th>
-          <th>Mem. do Subsolo</th>
+          <th>O Jogador</th>
           <th class="chk-cell"></th>
           <th>Criados à Imagem</th>
           <th class="chk-cell"></th>
@@ -219,136 +239,186 @@
     </table>
   </div>
 
-  <p class="note">
-    Ritmo: ~14 pág./dia de Memórias do Subsolo, ~19 pág./dia de Criados à Imagem de Deus e ~12 pág./dia de Apologética da Mamãe Ursa.
-    Os três livros fecham juntos, por volta de 2 de outubro.
-    Os checkboxes ficam salvos neste navegador — se você abrir esta página em outro aparelho ou limpar os dados do site, o progresso marcado não aparece lá.
-  </p>
+  <p class="note" id="note"></p>
 </div>
 
 <script>
   const weekdays = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
   const months = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
-  const STORAGE_KEY = 'diario-leitura-checks-v4';
 
-  function buildRanges(startPage, endPage, dailyRate, totalDays){
-    const ranges = [];
-    let current = startPage;
-    for(let i=0;i<totalDays;i++){
-      if(current > endPage){
-        ranges.push(null);
-      } else {
-        const end = Math.min(current + dailyRate - 1, endPage);
-        ranges.push([current, end]);
-        current = end + 1;
-      }
+  const CHECKS_KEY = 'diario-leitura-checks-v5';
+  const STARTS_KEY = 'diario-leitura-inicio-v6';
+
+  // ===== Configuração do novo cronograma =====
+  const PLAN_START = new Date(2026, 8, 25);   // sex, 25 set 2026
+  const JOGADOR_START = new Date(2026, 8, 28); // seg, 28 set 2026
+  const JOGADOR_RATE = 15;   // pág./dia
+  const CRIADOS_RATE = 6;    // pág./dia
+  const URSA_WEEKEND = 30;   // pág. por fim de semana (15 no sábado + 15 no domingo)
+
+  const BOOKS = {
+    jogador: {
+      label: 'O Jogador', end: 221,
+      pagesFor: d => d >= JOGADOR_START ? JOGADOR_RATE : 0,
+      offLabel: () => 'começa seg.',
+      rateText: `${JOGADOR_RATE} pág./dia`
+    },
+    criados: {
+      label: 'Criados à Imagem de Deus', end: 415,
+      pagesFor: () => CRIADOS_RATE,
+      offLabel: () => '—',
+      rateText: `${CRIADOS_RATE} pág./dia`
+    },
+    ursa: {
+      label: 'Apologética da Mamãe Ursa', end: 317,
+      pagesFor: d => (d.getDay() === 0 || d.getDay() === 6) ? URSA_WEEKEND / 2 : 0,
+      offLabel: () => '—',
+      rateText: `${URSA_WEEKEND} pág./fim de semana`
     }
-    return ranges;
+  };
+  const ORDER = ['jogador', 'criados', 'ursa'];
+
+  function safeGet(key){
+    try{ const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : null; }
+    catch(e){ return null; }
+  }
+  function safeSet(key, value){
+    try{ localStorage.setItem(key, JSON.stringify(value)); } catch(e){ /* ignore */ }
   }
 
-  const startDate = new Date(2026, 8, 11); // 11 set 2026
-  const SUB_RATE = 14, CRIADOS_RATE = 19, URSA_RATE = 12;
-  const SUB_START = 1, SUB_END = 306;
-  const CRIADOS_START = 1, CRIADOS_END = 415;
-  const URSA_START = 60, URSA_END = 317;
+  // Páginas em que você está hoje (25 set)
+  function defaultStarts(){
+    return { jogador: 1, criados: 172, ursa: 60 };
+  }
 
-  const subDaysNeeded = Math.ceil((SUB_END - SUB_START + 1) / SUB_RATE);
-  const criadosDaysNeeded = Math.ceil((CRIADOS_END - CRIADOS_START + 1) / CRIADOS_RATE);
-  const ursaDaysNeeded = Math.ceil((URSA_END - URSA_START + 1) / URSA_RATE);
-  const totalDays = Math.max(subDaysNeeded, criadosDaysNeeded, ursaDaysNeeded);
+  const starts = Object.assign(defaultStarts(), safeGet(STARTS_KEY) || {});
+  const checkState = safeGet(CHECKS_KEY) || {};
 
-  const subRanges = buildRanges(SUB_START, SUB_END, SUB_RATE, totalDays);
-  const criadosRanges = buildRanges(CRIADOS_START, CRIADOS_END, CRIADOS_RATE, totalDays);
-  const ursaRanges = buildRanges(URSA_START, URSA_END, URSA_RATE, totalDays);
+  function dateKey(d){
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  }
+  function fmt(d){ return `${d.getDate()} ${months[d.getMonth()]}`; }
+
+  function buildSchedule(){
+    const cur = { ...starts };
+    const rows = [];
+    const finish = {};
+    for(let i = 0; i < 400; i++){
+      const d = new Date(PLAN_START);
+      d.setDate(d.getDate() + i);
+      const row = { date: d, cells: {} };
+      ORDER.forEach(key=>{
+        const b = BOOKS[key];
+        if(cur[key] > b.end){ row.cells[key] = { type: 'done' }; return; }
+        const pages = b.pagesFor(d);
+        if(!pages){ row.cells[key] = { type: 'off', label: b.offLabel(d) }; return; }
+        const s = cur[key], e = Math.min(s + pages - 1, b.end);
+        row.cells[key] = { type: 'read', s, e, last: e === b.end };
+        cur[key] = e + 1;
+        if(e === b.end) finish[key] = new Date(d);
+      });
+      rows.push(row);
+      if(ORDER.every(k => cur[k] > BOOKS[k].end)) break;
+    }
+    return { rows, finish };
+  }
 
   const tbody = document.getElementById('schedule-body');
   const todayStr = new Date().toDateString();
+  let needed = {};
 
-  function loadChecks(){
-    try{
-      const raw = localStorage.getItem(STORAGE_KEY);
-      return raw ? JSON.parse(raw) : {};
-    } catch(e){ return {}; }
+  function render(){
+    const { rows, finish } = buildSchedule();
+    needed = { jogador: 0, criados: 0, ursa: 0 };
+    tbody.innerHTML = '';
+
+    rows.forEach(row=>{
+      const d = row.date;
+      const tr = document.createElement('tr');
+      if(d.toDateString() === todayStr) tr.classList.add('today');
+      if(d.getDay() === 0 || d.getDay() === 6) tr.classList.add('weekend');
+
+      let html = `<td class="date-cell"><span class="wk">${weekdays[d.getDay()]}</span><span class="dt">${fmt(d)}</span></td>`;
+      ORDER.forEach(key=>{
+        const c = row.cells[key];
+        if(c.type === 'read'){
+          needed[key]++;
+          const ck = `${key}-${dateKey(d)}`;
+          html += `<td><span class="pill ${key}">pág. ${c.s}–${c.e}</span>${c.last ? '<div class="milestone">último trecho</div>' : ''}</td>`;
+          html += `<td class="chk-cell"><input type="checkbox" class="${key}-check" data-book="${key}" data-key="${ck}" aria-label="${BOOKS[key].label}, ${fmt(d)}" ${checkState[ck] ? 'checked' : ''}></td>`;
+        } else if(c.type === 'done'){
+          html += `<td><span class="pill done">concluído</span></td><td class="chk-cell"></td>`;
+        } else {
+          html += `<td><span class="off">${c.label}</span></td><td class="chk-cell"></td>`;
+        }
+      });
+      tr.innerHTML = html;
+      tbody.appendChild(tr);
+    });
+
+    // Cartões dos livros
+    ORDER.forEach(key=>{
+      const b = BOOKS[key];
+      const input = document.getElementById(`start-${key}`);
+      if(document.activeElement !== input) input.value = starts[key];
+      input.max = b.end + 1;
+      const remaining = Math.max(0, b.end - starts[key] + 1);
+      const end = finish[key] ? `termina em <strong>${fmt(finish[key])}</strong>` : 'concluído';
+      document.getElementById(`meta-${key}`).innerHTML =
+        `${b.end} pág. · ${b.rateText} · faltam ${remaining} pág. · ${end}`;
+    });
+
+    const lastDate = rows[rows.length - 1].date;
+    document.getElementById('kicker').textContent =
+      `Cronograma atualizado · ${fmt(PLAN_START)} – ${fmt(lastDate)} ${lastDate.getFullYear()}`;
+
+    const endText = ORDER
+      .filter(k => finish[k])
+      .map(k => `${BOOKS[k].label} em ${fmt(finish[k])}`)
+      .join(', ');
+    document.getElementById('note').innerHTML =
+      `Ritmo: ${JOGADOR_RATE} pág./dia de O Jogador (a partir de 28/set), ${CRIADOS_RATE} pág./dia de Criados à Imagem de Deus ` +
+      `e ${URSA_WEEKEND} pág. por fim de semana de Apologética da Mamãe Ursa (15 no sábado, 15 no domingo).<br>` +
+      (endText ? `Previsão de término: ${endText}.<br>` : '') +
+      `Se a página em que você está mudar, é só corrigir o número no cartão do livro que o cronograma se refaz. ` +
+      `Os checkboxes ficam salvos neste navegador — em outro aparelho ou com os dados do site limpos, o progresso marcado não aparece.`;
+
+    updateProgress();
   }
-  function saveChecks(state){
-    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e){ /* ignore */ }
-  }
-  const checkState = loadChecks();
-
-  for(let i=0;i<totalDays;i++){
-    const d = new Date(startDate);
-    d.setDate(d.getDate() + i);
-    const wk = weekdays[d.getDay()];
-    const dateLabel = `${d.getDate()} ${months[d.getMonth()]}`;
-
-    const tr = document.createElement('tr');
-    if(d.toDateString() === todayStr) tr.classList.add('today');
-
-    const subRange = subRanges[i];
-    const criadosRange = criadosRanges[i];
-    const ursaRange = ursaRanges[i];
-
-    const subCellHtml = subRange
-      ? `<span class="pill sub">pág. ${subRange[0]}–${subRange[1]}</span>${subRange[1]===SUB_END ? '<div class="milestone">último trecho</div>' : ''}`
-      : `<span class="pill done">concluído</span>`;
-    const subChkHtml = subRange
-      ? `<input type="checkbox" class="sub-check" data-book="sub" data-day="${i}">` : ``;
-
-    const criadosCellHtml = criadosRange
-      ? `<span class="pill criados">pág. ${criadosRange[0]}–${criadosRange[1]}</span>${criadosRange[1]===CRIADOS_END ? '<div class="milestone">último trecho</div>' : ''}`
-      : `<span class="pill done">concluído</span>`;
-    const criadosChkHtml = criadosRange
-      ? `<input type="checkbox" class="criados-check" data-book="criados" data-day="${i}">` : ``;
-
-    const ursaCellHtml = ursaRange
-      ? `<span class="pill ursa">pág. ${ursaRange[0]}–${ursaRange[1]}</span>${ursaRange[1]===URSA_END ? '<div class="milestone">último trecho</div>' : ''}`
-      : `<span class="pill done">concluído</span>`;
-    const ursaChkHtml = ursaRange
-      ? `<input type="checkbox" class="ursa-check" data-book="ursa" data-day="${i}">` : ``;
-
-    tr.innerHTML = `
-      <td class="date-cell"><span class="wk">${wk}</span><span class="dt">${dateLabel}</span></td>
-      <td>${subCellHtml}</td>
-      <td class="chk-cell">${subChkHtml}</td>
-      <td>${criadosCellHtml}</td>
-      <td class="chk-cell">${criadosChkHtml}</td>
-      <td>${ursaCellHtml}</td>
-      <td class="chk-cell">${ursaChkHtml}</td>
-    `;
-    tbody.appendChild(tr);
-  }
-
-  // restore saved checkbox state
-  document.querySelectorAll('input[type="checkbox"]').forEach(cb=>{
-    const key = `${cb.dataset.book}-${cb.dataset.day}`;
-    if(checkState[key]) cb.checked = true;
-  });
 
   function updateProgress(){
-    const groups = [
-      {book:'sub', needed: subDaysNeeded, fill: 'fill-sub', text: 'text-sub'},
-      {book:'criados', needed: criadosDaysNeeded, fill: 'fill-criados', text: 'text-criados'},
-      {book:'ursa', needed: ursaDaysNeeded, fill: 'fill-ursa', text: 'text-ursa'},
-    ];
-    groups.forEach(g=>{
-      const boxes = document.querySelectorAll(`input[data-book="${g.book}"]`);
-      const checked = Array.from(boxes).filter(c=>c.checked).length;
-      const pct = Math.round((checked / g.needed) * 100);
-      document.getElementById(g.fill).style.width = pct + '%';
-      document.getElementById(g.text).textContent = `${checked}/${g.needed} dias marcados`;
+    ORDER.forEach(key=>{
+      const boxes = tbody.querySelectorAll(`input[data-book="${key}"]`);
+      const checked = Array.from(boxes).filter(c => c.checked).length;
+      const total = needed[key] || 0;
+      const pct = total ? Math.round((checked / total) * 100) : 100;
+      document.getElementById(`fill-${key}`).style.width = pct + '%';
+      document.getElementById(`text-${key}`).textContent = `${checked}/${total} dias marcados`;
     });
   }
 
-  tbody.addEventListener('change', (e)=>{
+  tbody.addEventListener('change', e=>{
     if(e.target.matches('input[type="checkbox"]')){
-      const key = `${e.target.dataset.book}-${e.target.dataset.day}`;
-      checkState[key] = e.target.checked;
-      saveChecks(checkState);
+      checkState[e.target.dataset.key] = e.target.checked;
+      safeSet(CHECKS_KEY, checkState);
       updateProgress();
     }
   });
 
-  updateProgress();
+  document.querySelectorAll('.start-row input').forEach(input=>{
+    input.addEventListener('change', ()=>{
+      const key = input.dataset.book;
+      let v = parseInt(input.value, 10);
+      if(isNaN(v)) v = starts[key];
+      v = Math.max(1, Math.min(v, BOOKS[key].end + 1));
+      starts[key] = v;
+      input.value = v;
+      safeSet(STARTS_KEY, starts);
+      render();
+    });
+  });
+
+  render();
 </script>
 </body>
 </html>
